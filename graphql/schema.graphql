@@ -1,0 +1,59 @@
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Query {
+    users: [User!]! @paginate(defaultCount: 10)
+    user(id: ID @eq): User @find
+}
+
+type Mutation {
+    createUser(name: String!, email: String, password: String! @bcrypt): User @create
+
+
+    createBeneficiary(name: String!, code: String!, account: String!, bank: String!, tin: String!): Beneficiary @create
+    updateBeneficiary(id: ID!, name: String, code: String, account: String, bank: String, tin: String): Beneficiary @update
+    deleteBeneficiary(id: ID! ): Beneficiary @delete
+
+    
+}
+
+
+
+# schema Type of The Models
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Beneficiary {
+    id: ID!
+    name: String!
+    code: String!
+    account: String!
+    bank: String!
+    tin: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Voucher {
+    id: ID!
+    pvno: String!
+    totalamount: Int!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Tax {
+    id: ID!
+    type: String!
+    percentage: Int!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
