@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use App\PaymentCart;
 use App\Tax;
+use Facade\FlareClient\Time\Time;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -144,7 +145,8 @@ class VouchersController extends Controller
                    'tax_id'=> $tax_id,
                 ];
 
-                $newPayment = DB::table('payments')->insert($paymentArray);
+                $newPayment = Payment::create($paymentArray);
+                // $newPayment = DB::table('payments')->insert($paymentArray);
 
             }
             

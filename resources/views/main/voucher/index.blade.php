@@ -25,7 +25,7 @@
                                     <div class="col-3"></div>
                                     <div class="col-3"></div>
                                     <div class="col-3">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"><i class="">+</i> Create New voucher</button>
+                                        <a href="{{route('show_create_voucher')}}" class="btn btn-primary" ><i class="">+</i> Create New voucher</a>
                                     </div>
                                     
                                 </div>
@@ -64,63 +64,16 @@
                                                               </li>
                                                         </ul>
                                                 </td>
-                                                <td>{{$voucher->totalamount}}</td>
-                                                <td>{{$voucher->created_at}}</td>
+                                                <td>N{{$voucher->totalamount}}</td>
+                                                 <?php $due = explode(' ', $voucher->created_at); $date = explode('-', $due[0]); $vou_date = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+                                                <td>{{$vou_date}}</td>
                                             </tr>
                                             @endforeach
                                             
                                         </tbody>
                                     </table>
                                 </div>
-                            
-                                <!-- Modal -->
-                                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="staticBackdropLabel">Add Payment</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <form action="{{route('create_payments')}}" method="POST">
-                                            @csrf
-                                            <div class="form-group">
-                                                <label class="small mb-1" for="beneficiary">Beneficiary</label>
-                                                <select name="beneficiary" class="form-control" id="beneficiary" aria-describedby="nameHelp" placeholder="Select" >
-                                                    @foreach ($beneficiaries as $beneficiary)
-                                                    <option value="{{$beneficiary->id}}">{{$beneficiary->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="small mb-1" for="amount">Amount</label>
-                                                <input name="amount" class="form-control py-4" id="amount" type="number" aria-describedby="nameHelp" placeholder="Enter Amount" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="small mb-1" for="description">Description</label>
-                                                <textarea name="description" class="form-control py-4" id="description" aria-describedby="nameHelp" placeholder="Enter Description" ></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="small mb-1" for="tax">Tax (Optional)</label>
-                                                <select name="tax" class="form-control" id="tax" aria-describedby="nameHelp" placeholder="Select" >
-                                                   <option value="">None</option>
-                                                    @foreach ($taxes as $tax)
-                                                    <option value="{{$tax->id}}">{{$tax->type}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <input name="submit" class="btn btn-success" id="submit" type="submit" aria-describedby="nameHelp" value="Add to cache" />
-                                            </div>
-                                        </form>
-                                      </div>
-                                      <div class="modal-footer">
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                        
                             </div>
                         </div>
                     </div>

@@ -63,7 +63,7 @@
                                                               </li>
                                                         </ul>
                                                 </td>
-                                                <td>{{$payment['data']['amount']}}</td>
+                                                <td>N{{$payment['data']['amount']}}</td>
                                                 <td>{{$payment['data']['description']}}</td>
                                                 <td>{{$tax->type ?? 'Null'}}</td>
                                                 
@@ -118,7 +118,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="small mb-1" for="amount">Amount</label>
-                                                <input name="amount" class="form-control py-4" id="amount" type="number" aria-describedby="nameHelp" placeholder="Enter Amount" />
+                                                <input name="amount" class="form-control py-4" id="amount" type="number" step="any" aria-describedby="nameHelp" placeholder="Enter Amount" />
                                             </div>
                                             <div class="form-group">
                                                 <label class="small mb-1" for="description">Description</label>

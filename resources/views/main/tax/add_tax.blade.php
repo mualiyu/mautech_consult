@@ -39,7 +39,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small mb-1" for="pacentage">Percentage(%)</label>
-                                    <input name="percentage" class="form-control py-4" id="percentage" type="number" placeholder="Enter Percentage" />
+                                    <input name="percentage" class="form-control py-4" id="percentage" type="number" step="any" placeholder="Enter Percentage" />
                                 </div>
                             </div>
                         </div>

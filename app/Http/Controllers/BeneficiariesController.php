@@ -60,7 +60,8 @@ class BeneficiariesController extends Controller
             "tin" => $request->input("tin"),
         ];
 
-        DB::table('beneficiaries')->insert($arrayToInsert);
+        Beneficiary::create($arrayToInsert);
+        // DB::table('beneficiaries')->insert($arrayToInsert);
 
         return redirect()->route("beneficiaries")->with(['message'=> "New beneficiary is added"]);
 

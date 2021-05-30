@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container-fluid">
-                        <h1 class="mt-4">voucher-{{$voucher->pvno}} Payments</h1>
+                        <h1 class="mt-4">Mandate No:- {{$mandateno}}</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Payments of {{$voucher->pvno}}</li>
+                            <li class="breadcrumb-item active">Mandate No {{$mandateno}}</li>
                         </ol>
                         @if (session('message'))
                         <div class="alert alert-success" role="alert">
@@ -34,28 +34,30 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Beneficiary</th>
-                                                <th>Amount</th>
-                                                <th>Description</th>
-                                                <th>voucher</th>
-                                                <th>Tax</th>
-                                                <th>Due Date</th>
+                                                <th>BENEFICIARY</th>
+                                                <th>AMOUNT</th>
+                                                <th>DUE DATE</th>
+                                                <th>CODE</th>
+                                                <th>ACCOUNT</th>
+                                                <th>BANK</th>
+                                                <th>PURPOSE</th>
                                             </tr>
                                         </thead>
                                         
-                                        @if ($payments)
+                                        @if ($mandates)
                                             
                                         <tbody>
-                                            @foreach ($payments as $payment)    
+                                            @foreach ($mandates as $mandate)    
                                             <tr>
                                                 <td>
                                                     {{-- {{ $beneficiary = \App\Beneficiary::find($payment->beneficiary_id) }} --}}
-                                                    <?php $beneficiary = Illuminate\Support\Facades\DB::table("beneficiaries")->where('id','=', $payment->beneficiary_id)->get() ?>
-                                                    <?php $voucher = \App\Voucher::find($payment->voucher_id) ?>
-                                                    @if ($payment->tax_id == 0)
+                                                    <?php $beneficiary = Illuminate\Support\Facades\DB::table("beneficiaries")->where('id','=', $mandate->beneficiary_id)->get() ?>
+                                                    <?php $voucher = \App\Voucher::find($mandate->voucher_id) ?>
+                                                    <?php $payment = \App\Payment::find($mandate->payment_id) ?>
+                                                    @if ($mandate->tax_id == 0)
                                                         <?php $tax = "None" ?>
                                                     @else
-                                                    <?php $tax = \App\Tax::find($payment->tax_id) ?>
+                                                        <?php $tax = \App\Tax::find($mandate->tax_id) ?>
                                                     @endif
 
                                                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
@@ -63,24 +65,15 @@
                                                             {{$item->name}}
                                                         @endforeach
                                                     </a>
-                                                        <ul class="dropdown-menu">
-                                                            <li align="center"><b>{{$payment->id}}</b></li>
-                                                            <hr>
-                                                            <li style="margin-left: 6px;">
-                                                                <form method="post" action="{{route('delete_payment', ['id'=>$payment->id])}}">
-                                                                    @csrf
-                                                                    <input type="hidden" name="tax_id" value="{{$payment->id}}">
-                                                                <button href="#" class="btn btn-warning">Delete Payment</button>
-                                                                </form>
-                                                              </li>
-                                                        </ul>
+                                                        
                                                 </td>
                                                 <td>N{{$payment->amount}}</td>
-                                                <td>{{$payment->description}}</td>
-                                                <td>{{$voucher->pvno}}</td>
-                                                <td>{{$tax->type ?? 'Null'}}</td>
-                                                <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+                                                <?php $due = explode(' ', $payment->duedate); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
                                                 <td>{{$duedate}}</td>
+                                                <td>{{$beneficiary[0]->code}}</td>
+                                                <td>{{$beneficiary[0]->account}}</td>
+                                                <td>{{$beneficiary[0]->bank}}</td>
+                                                <td>{{$payment->description}}</td>
                                             </tr>
                                             @endforeach
                                             
@@ -96,7 +89,7 @@
                                     <div class="col-3"></div>
                                     <div class="col-3"></div>
                                     <div class="col-3">
-                                        <a href="{{route('create_pdf_voucher', ['id'=> $voucher->id])}}" class="btn btn-primary"> Print Voucher</a>
+                                        <a href="{{route('create_pdf_mandate', ['id'=>$i_d])}}" class="btn btn-primary"> Print Mandate</a>
                                     </div>
                                 </div>
                             

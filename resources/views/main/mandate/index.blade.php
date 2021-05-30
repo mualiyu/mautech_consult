@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-                        <h1 class="mt-4">Mandate</h1>
+                        <h1 class="mt-4">Mandate's</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
                             <li class="breadcrumb-item active">mandate</li>
@@ -24,7 +24,7 @@
                                     <div class="col-3"></div>
                                     <div class="col-2"></div>
                                     <div class="col-3">
-                                        <a href="{{ route('show_add_beneficiary') }}" class="btn btn-primary" ><i class="">+</i> Create Mandate</a>
+                                        <a href="{{ route('show_create_mandate') }}" class="btn btn-primary" ><i class="">+</i> Create Mandate</a>
                                     </div>
                                 </div>
                                 <div class="table-responsive" style="overflow-x:hidden;">
@@ -32,46 +32,43 @@
                                         <thead>
                                             <tr>
                                                 <th>Mandate No</th>
-                                                <th>Code</th>
-                                                <th>Account</th>
-                                                <th>Bank</th>
-                                                <th>Tin</th>
-                                                <th>Created_at</th>
+                                                <th>Amount</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Code</th>
-                                                <th>Account</th>
-                                                <th>Bank</th>
-                                                <th>Tin</th>
-                                                <th>Created_at</th>
+                                                <th>Mandate No</th>
+                                                <th>Amount</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            @foreach ($beneficiaries as $beneficiary)    
+                                            @foreach ($mandates as $mandateno)  
+                                            <?php 
+                                                $mandate = \App\Mandate::where('mandateno', '=', $mandateno)->get();
+                                                $amount_r = [];
+                                                foreach ($mandate as $m) {
+                                                    $p = $m->payment_id;
+                                                    $payment = \App\Payment::where('id', '=', $p)->get();
+                                                    // dd($payment[0]->amount);
+                                                    array_push($amount_r, $payment[0]->amount);
+                                                }
+                                                $amount = 0; 
+                                                for ($i=0; $i < count($amount_r); $i++) { 
+                                                    $amount = $amount + $amount_r[$i];
+                                                }
+
+                                                $man_no = explode('/', $mandateno);
+                                                
+                                            ?>
                                             <tr>
                                                 <td>
-                                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">{{$beneficiary->name}}</a>
+                                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">{{$mandateno}}</a>
                                                         <ul class="dropdown-menu">
-                                                            <li align="center"><b>{{$beneficiary->name}}</b></li>
+                                                            <li align="center"><b>{{$mandateno}}</b></li>
                                                             <hr>
-                                                            <li style="margin-left: 6px;"><a href="{{route('show_edit_beneficiary', ['id'=>$beneficiary->id])}}" class="btn btn-success"><i class="fas fa-edit"></i> Edit Beneficiary</a></li>
-                                                            <li style="margin-left: 6px;">
-                                                                <form method="post" action="{{route('delete_ben', ['id'=>$beneficiary->id])}}">
-                                                                    @csrf
-                                                                    <input type="hidden" name="Ben_id" value="{{$beneficiary->id}}">
-                                                                <button href="#" class="btn btn-warning">Delete Beneficiary</button>
-                                                                </form>
-                                                              </li>
-                                                        </ul>
+                                                            <li style="margin-left: 6px;"><a href="{{route('show_single_mandate', ['id'=>$man_no[2].'-'.$man_no[3]])}}" class="btn btn-success"><i class="fas fa-edit"></i> Open Mandate</a></li>
                                                 </td>
-                                                <td>{{$beneficiary->code}}</td>
-                                                <td>{{$beneficiary->account}}</td>
-                                                <td>{{$beneficiary->bank}}</td>
-                                                <td>{{$beneficiary->tin}}</td>
-                                                <td>{{$beneficiary->created_at}}</td>
+                                                <td>N{{$amount}}</td>
                                             </tr>
                                             @endforeach
                                             

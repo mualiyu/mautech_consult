@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Tax extends Model
 {
     protected $fillable = [
-        'percentage', 'type', 
+        'percentage', 'type', 'created_at', 'updated_at'
     ];
 
     public function payments(): HasMany

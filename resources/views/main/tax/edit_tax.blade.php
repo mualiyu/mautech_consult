@@ -40,7 +40,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small mb-1" for="percentage">Percentage</label>
-                                    <input name="percentage" value="{{$tax->percentage}}" class="form-control py-4" id="percentage" type="number" placeholder="Enter percentage" />
+                                    <input name="percentage" value="{{$tax->percentage}}" class="form-control py-4" id="percentage" type="number" step="any" placeholder="Enter percentage" />
                                 </div>
                             </div>
                         </div>

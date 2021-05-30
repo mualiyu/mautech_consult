@@ -7,7 +7,8 @@ use App\Http\Controllers\BeneficiariesController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\VouchersController;
 use App\Http\Controllers\PaymentsController;
-
+use App\Http\Controllers\PdfController;
+use App\Http\Controllers\MandateController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,8 +51,22 @@ Route::post('/{id}/delete_payment_from_local', [VouchersController::class, "dele
 Route::post('/create_voucher_and_payments', [VouchersController::class, "create_voucher_and_payments"])->name('create_voucher_and_payments');
 
 Route::get('/payments', [PaymentsController::class, "index"])->name('payments');
-Route::get('/{id}/edit_payment', [PaymentsController::class, "show_edit_payment"])->name('show_edit_payment');
-Route::post('/{id}/update_payment', [PaymentsController::class, "update_payment"])->name('update_payment');
 Route::post('/{id}/delete_payment', [PaymentsController::class, "delete_payment"])->name('delete_payment');
+
+
+Route::get('/mandates', [MandateController::class, "index"])->name('mandates');
+Route::get('/create_mandate', [MandateController::class, "show_create_mandate"])->name('show_create_mandate');
+Route::get('/mandate/{id}', [MandateController::class, "show_single_mandate"])->name('show_single_mandate');
+Route::post('/create_cache_mandate', [MandateController::class, "create_cache_mandate"])->name('create_cache_mandate');
+Route::post('/store_mandate', [MandateController::class, "store_mandate"])->name('store_mandate');
+Route::post('/delete_mandate', [MandateController::class, "delete_local_mandate"])->name('delete_local_mandate');
+
+//pdf's 
+Route::get('pdf/voucher/{id}', [PdfController::class, "Create_pdf_voucher"])->name("create_pdf_voucher");
+Route::get('pdf/mandate/{id}', [PdfController::class, "Create_pdf_mandate"])->name("create_pdf_mandate");
+Route::get('pdf/mandate/', [PdfController::class, "mandate"])->name("mandate");
+Route::get('pdf/cashbook/', [PdfController::class, "create_pdf_cashbook"])->name("create_pdf_cashbook");
+Route::post('pdf/cash_book', [PdfController::class, "create_pdf_cashbook_range"])->name('create_pdf_cashbook_range');
+
 
 Auth::routes();

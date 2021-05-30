@@ -8,6 +8,7 @@ use App\Tax;
 use App\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class PaymentsController extends Controller
 {
@@ -24,12 +25,18 @@ class PaymentsController extends Controller
         return view('main.payments.index')->with(['payments'=>$payments]);
     }
 
-    public function show_edit_payment($id)
-    {
-        $payment = Payment::find($id);
-        $beneficiaries = Beneficiary::all();
-        $taxes = Tax::all();
+   
 
-        return view('main.payments.edit_payment')->with(['payment'=>$payment, 'beneficiaries'=> $beneficiaries, 'taxes'=> $taxes]);
+    
+    public function delete_payment($id)
+    {
+        $del_payment = Payment::destroy($id);
+
+        if(!$del_payment){
+            return redirect()->route('payments')->with(["error"=>"System Can't delete Payment Now! Try Later."]);
+        }
+
+        return redirect()->route('payments')->with(['message' =>"Payment is deleted."]);
+
     }
 }

@@ -36,7 +36,6 @@
                                                 <th>Account</th>
                                                 <th>Bank</th>
                                                 <th>Tin</th>
-                                                <th>Created_at</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -46,7 +45,6 @@
                                                 <th>Account</th>
                                                 <th>Bank</th>
                                                 <th>Tin</th>
-                                                <th>Created_at</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -71,7 +69,6 @@
                                                 <td>{{$beneficiary->account}}</td>
                                                 <td>{{$beneficiary->bank}}</td>
                                                 <td>{{$beneficiary->tin}}</td>
-                                                <td>{{$beneficiary->created_at}}</td>
                                             </tr>
                                             @endforeach
                                             

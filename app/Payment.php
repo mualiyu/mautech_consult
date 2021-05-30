@@ -15,7 +15,7 @@ class Payment extends Model
 {
 
     protected $fillable = [
-        'amount', 'description', 'duedate', 'beneficiary', 'voucher', 'tax',
+        'amount', 'description', 'duedate', 'beneficiary_id', 'voucher_id', 'tax_id',
     ];
 
     public function beneficiary(): BelongsTo

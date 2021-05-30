@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="author" content=" muktar" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'MAUTECH') }}</title>
         <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
     </head>
@@ -72,6 +72,14 @@
                             </a>
                             <div class="sb-sidenav-menu-heading"><i class="fas fa-columns"></i> Interface</div>
                             
+                            <a class="nav-link" href="{{ route('vouchers') }}">
+                                <div class="sb-nav-link-icon">  </div>
+                                Vouchers
+                            </a>
+                            <a class="nav-link" href="{{ route('mandates') }}">
+                                <div class="sb-nav-link-icon">  </div>
+                                Mandates
+                            </a>
                             <a class="nav-link" href="{{ route('beneficiaries') }}">
                                 <div class="sb-nav-link-icon">  </div>
                                 Beneficiaries
@@ -83,14 +91,6 @@
                             <a class="nav-link" href="{{ route('payments') }}">
                                 <div class="sb-nav-link-icon">  </div>
                                 Payments
-                            </a>
-                            <a class="nav-link" href="{{ route('vouchers') }}">
-                                <div class="sb-nav-link-icon">  </div>
-                                Vouchers
-                            </a>
-                            <a class="nav-link" href="{{ route('show_create_voucher') }}">
-                                <div class="sb-nav-link-icon">  </div>
-                                Create Voucher
                             </a>
                             
                             
@@ -126,5 +126,9 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="{{ asset('js/scripts.js') }}"></script>
         @yield('script')
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     </body>
 </html>

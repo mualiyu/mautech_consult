@@ -38,7 +38,7 @@ class TaxController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "type" => "string",
-            "percentage" => "Int",
+            "percentage" => "string",
         ]);
 
         if ($validator->fails()) {
@@ -52,7 +52,8 @@ class TaxController extends Controller
             "percentage" => $request->input("percentage"),
         ];
 
-        DB::table('taxes')->insert($arrayToInsert);
+        Tax::create($arrayToInsert);
+        // DB::table('taxes')->insert($arrayToInsert);
 
         return redirect('/taxes')->with(['message' => "New Tax is added"]);
     }
@@ -61,11 +62,11 @@ class TaxController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "type" => "string",
-            "percentage" => "Int",
+            "percentage" => "string",
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route("show_edit_tax")->with(['error'=> "server Can not Validate Entries"]);
+            return redirect()->route("show_edit_tax", ['id'=>$id])->with(['error'=> "server Can not Validate Entries"]);
         }
 
         $arrayToUpdate = [
@@ -73,7 +74,8 @@ class TaxController extends Controller
             "percentage" => $request->input("percentage"),
         ];
 
-        DB::table('taxes')->where('id', '=', $id)->update($arrayToUpdate);
+        Tax::where('id', '=', $id)->update($arrayToUpdate);
+        // DB::table('taxes')->where('id', '=', $id)->update($arrayToUpdate);
 
         return redirect('/taxes')->with(['message' => "Tax is Updated"]);
     }
