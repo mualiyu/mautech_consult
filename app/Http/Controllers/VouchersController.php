@@ -171,7 +171,8 @@ class VouchersController extends Controller
             foreach ($mandates as $mandate) {
                 DB::table('mandates')->delete($mandate->id);
             }
-        }
+	}
+	Cache::forget("mandates");
 
         DB::table('vouchers')->delete($id);
 

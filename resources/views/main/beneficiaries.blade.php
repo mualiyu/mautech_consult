@@ -27,7 +27,7 @@
                                         <a href="{{ route('show_add_beneficiary') }}" class="btn btn-primary" ><i class="">+</i> Add Beneficiary</a>
                                     </div>
                                 </div>
-                                <div class="table-responsive" style="overflow-x:hidden;">
+                                <div class="table-responsive" style="">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>

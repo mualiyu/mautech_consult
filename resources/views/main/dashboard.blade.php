@@ -17,12 +17,49 @@
         <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
         <li class="breadcrumb-item active"></li>
     </ol>
+<div class="row">
+  <div class="col-md-6 col-sm-6">
     <div class="card mb-4">
-        <div class="card-body">
-            
-        </div>
+	<div class="card-body">
+	    <h2>Mandates Record</h2>
+		<ul> 
+		<li><b>Date, Mandate, Pvno, Amount: </b></li><br>
+		@foreach($mandates as $mandate)
+ 			<?php $beneficiary = Illuminate\Support\Facades\DB::table("beneficiaries")->where('id','=', $mandate->beneficiary_id)->get() ?>
+                        <?php $voucher = \App\Voucher::find($mandate->voucher_id) ?>
+                        <?php $payment = \App\Payment::find($mandate->payment_id) ?>
+ 			<?php $due = explode(' ', $payment->duedate); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+
+			<li>{{$duedate}}, {{$mandate->mandateno}}, {{$voucher->pvno}}, N{{$voucher->totalamount}}  </li>
+		@endforeach
+		</ul>
+
+	</div>
     </div>
+  </div>
+  <div class="col-md-6 col-sm-6">
+    <div class="card md-4">
+	<div class="card-body">
+	        <h2>Payment History</h2>
+		<ul>
+		<li><b>Date, Voucher, Beneficiary, Description: </b></li><br>
+		@foreach($payments as $payment)
+			<?php $beneficiaries = Illuminate\Support\Facades\DB::table("beneficiaries")->where('id','=', $payment->beneficiary_id)->get() ?>
+			<?php $beneficiary = App\Beneficiary::find($payment->baneficiary_id); ?>
+			<?php $due = explode(' ', $payment->duedate); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+			<?php $voucher = \App\Voucher::find($payment->voucher_id) ?>
+
+			<li>{{$duedate}}, {{$voucher->pvno}}, 
+@foreach($beneficiaries as $ben)
+{{$ben->name}},
+@endforeach
+ {{$payment->description}} </li>
+		@endforeach
+		</ul>
+	</div>
+    </div>
+  </div>
     <div style="height: 100vh;"></div>
-    <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
+   
 </div>
 @endsection

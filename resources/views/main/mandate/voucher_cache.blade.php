@@ -31,7 +31,7 @@
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#staticBackdrop"><i class="">+</i> Generate New Mandate</button>
                                     </div>
                                 </div><br>
-                                <div class="table-responsive" style="overflow-x:hidden;">
+                                <div class="table-responsive" style="">
                                     @if ($mandates)
                                         
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -46,7 +46,8 @@
                                             </tr>
                                         </thead>
                                         
-                                        <tbody>
+					<tbody>
+					@if($mandates['voucher'])
                                         @foreach ($mandates["voucher"] as $id)
                                         <?php $voucher = Illuminate\Support\Facades\DB::table('vouchers')->where('id','=', (int)$id)->get();?>
                                         <?php $payments = Illuminate\Support\Facades\DB::table('payments')->where('voucher_id','=', (int)$id)->get(); ?>
@@ -64,7 +65,8 @@
                                                 <td>N{{$payment->amount}}</td>
                                             </tr>
                                             @endforeach    
-                                            @endforeach
+					    @endforeach
+					    @endif
                                             
                                         </tbody>
                                     </table>

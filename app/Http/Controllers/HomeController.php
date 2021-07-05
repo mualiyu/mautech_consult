@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mandate;
+use App\Voucher;
+use App\Payment;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+	    $mandates = Mandate::latest()->take(10)->get();
+	    $vouchers = Voucher::latest()->take(10)->get();
+	    $payments = Payment::latest()->take(10)->get();
+        return view('main.dashboard', compact("mandates", "vouchers", "payments"));
     }
 }

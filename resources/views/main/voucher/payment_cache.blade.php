@@ -31,7 +31,7 @@
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#staticBackdrop"><i class="">+</i> Add Payment  to Voucher</button>
                                     </div>
                                 </div><br>
-                                <div class="table-responsive" style="overflow-x:hidden;">
+                                <div class="table-responsive" style="">
                                     @if ($payment)
                                         
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

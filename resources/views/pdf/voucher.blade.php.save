@@ -2,7 +2,7 @@
     <title>voucher_{{$voucher[0]->pvno}}</title>
     <style>
         td{
-            border: 0.1px solid black;
+            border: 1px solid black;
         }
     </style>
 </head>
@@ -74,8 +74,8 @@
 <table style="height: ; width: :">
 <tbody>
 <tr style="width: 100%;">
-<td style="width: 65%;  border: 0px solid black;">&nbsp; {{$payment->amount}}</td>
-<td style="width: 35%; border: 0px solid black;">&nbsp; .00</td>
+<td style="width: 65%;  border: 0.5px solid black;">&nbsp; {{$payment->amount}}</td>
+<td style="width: 35%
 </tr>
 </tbody>
 </table>

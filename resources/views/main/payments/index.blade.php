@@ -34,7 +34,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="table-responsive" style="overflow-x:hidden;">
+                                <div class="table-responsive" style="">
 
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
@@ -57,7 +57,8 @@
                                                 <th>Due Date</th>
                                             </tr>
                                         </tfoot>
-                                        @if ($payments)
+					@if ($payments)
+	
                                             
                                         <tbody>
                                             @foreach ($payments as $payment)    

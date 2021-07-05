@@ -9,6 +9,7 @@ use App\Http\Controllers\VouchersController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\MandateController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,9 +25,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('main.dashboard');
-})->name('dashboard');
+//Route::get('/dashboard', function () {
+  //  return view('main.dashboard');
+//})->name('dashboard');
+//
+Route::get('/dashboard', [HomeController::class, "index"])->name('dashboard');
 
 Route::get('/beneficiaries', [BeneficiariesController::class, "index"])->name('beneficiaries');
 Route::get('/add_beneficiary', [BeneficiariesController::class, "show_add_ben"])->name('show_add_beneficiary');

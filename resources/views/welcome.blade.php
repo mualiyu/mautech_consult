@@ -63,14 +63,12 @@
     <div class="container-fluid">
         <div class="content">
                 <div class="title m-b-md">
-                   MAUTECH CONSULTANCY SERVICES
-                </div>
+                   MAUTECH CONSULT                </div>
 
                 <div class="links">
-                    <a href="#">mautech.edu.ng</a>
-                    <a href="#">info@mautech.edu.ng</a>
-                    <a href="#">News</a>
-                    <a href="#">Blog</a>
+                    <a href="https://mautech.edu.ng/new/index.php/en/">mautech.edu.ng</a>
+                    <a href="mailto:info@mautech.edu.ng">info@mautech.edu.ng</a>
+                    <a href="https://mautech.edu.ng/new/index.php/en/#">News</a>
                 </div>
             </div>
     </div>

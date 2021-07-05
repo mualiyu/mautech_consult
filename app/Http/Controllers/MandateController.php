@@ -33,9 +33,10 @@ class MandateController extends Controller
             // $in = $ex[3];
             array_push($arr, $no);
         }
-        $mandate_s = array_unique($arr);
-        // dd($mandate_s);
-        return view('main.mandate.index')->with(['mandates'=> $mandate_s]);
+	$mandate_s = array_unique($arr);
+	$mandate_ss = array_reverse($mandate_s);
+	// dd($mandate_s);
+        return view('main.mandate.index')->with(['mandates'=> $mandate_ss]);
         
     }
 
@@ -47,7 +48,8 @@ class MandateController extends Controller
         $vouchers = Voucher::all();
         
         return view('main.mandate.voucher_cache')->
-            with(['vouchers'=>$vouchers, 'mandates'=>$mandates]);
+		with(['vouchers'=>$vouchers, 'mandates'=>$mandates]);
+	
     }
 
     public function create_cache_mandate(Request $request)
@@ -109,16 +111,19 @@ class MandateController extends Controller
                     
                 }
             }
-            Cache::forget('mandates');
-            
-            return redirect()->route('show_create_mandate');
+	    Cache::forget('mandates');
 
-            // return $this->show_single_mandate($mandateno);
+	    $manNo = explode('/', $mandateno);
+	    $manNo = $manNo[2].'-'.$manNo[3];
+            return redirect()->route('show_single_mandate', ['id'=>$manNo]);
+
+            //return $this->show_single_mandate($mandateno);
         }else {
             return redirect()->route('show_create_mandate')->with(["errors"=>"No mandate in Cache!"]);
         }
         
     }
+
 
     public function show_single_mandate($id)
     {
@@ -129,6 +134,5 @@ class MandateController extends Controller
 
         return view('main.mandate.single_mandate')->with(['mandateno'=>$mandateno, 'mandates'=>$mandates, 'i_d'=>$id]);
     }
-
 
 }

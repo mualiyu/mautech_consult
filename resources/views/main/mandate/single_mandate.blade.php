@@ -21,7 +21,7 @@
                         <div class="card mb-4">
                             <div class="card-body">
                                 
-                                <div class="table-responsive" style="overflow-x:hidden;">
+                                <div class="table-responsive" style="">
                                     <div class="row">
                                     <div class="col-3">
                                         <button onclick="window.history.go(-1)" class="btn btn-secondary"><i class="fas fas-goto"></i> Back</button>
