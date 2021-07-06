@@ -11,6 +11,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\MandateController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\ReportsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -81,5 +82,12 @@ Route::get('/{id}/edit_budget', [BudgetController::class, "show_edit_bud"])->nam
 Route::post('/create_bud', [BudgetController::class, "create_bud"])->name('create_bud');
 Route::post('/{id}/update_bud', [BudgetController::class, "update_bud"])->name('update_bud');
 Route::post('/{id}/delete_bud', [BudgetController::class, "delete_bud"])->name('delete_bud');
+
+
+//Reports
+Route::get('/reports', [ReportsController::class, "index"])->name('reports');
+Route::get('/single_report', [ReportsController::class, "single"])->name('single');
+Route::post('/reports', [ReportsController::class, "generate_reports"])->name('generate_reports');
+
 
 Auth::routes();

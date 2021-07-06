@@ -98,6 +98,10 @@
                                 <div class="sb-nav-link-icon">  </div>
                                 Budgets
                             </a>
+                            <a class="nav-link" href="{{ route('reports') }}">
+                                <div class="sb-nav-link-icon">  </div>
+                                Reports
+                            </a>
                             
                             
                             
