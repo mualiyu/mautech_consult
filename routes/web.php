@@ -10,6 +10,7 @@ use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\MandateController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BudgetController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,5 +72,13 @@ Route::get('pdf/mandate/', [PdfController::class, "mandate"])->name("mandate");
 Route::get('pdf/cashbook/', [PdfController::class, "create_pdf_cashbook"])->name("create_pdf_cashbook");
 Route::post('pdf/cash_book', [PdfController::class, "create_pdf_cashbook_range"])->name('create_pdf_cashbook_range');
 
+
+//budgets
+Route::get('/budgets', [BudgetController::class, "index"])->name('budgets');
+Route::get('/add_budget', [BudgetController::class, "show_add_bud"])->name('show_add_budget');
+Route::get('/{id}/edit_budget', [BudgetController::class, "show_edit_bud"])->name('show_edit_budget');
+Route::post('/create_bud', [BudgetController::class, "create_bud"])->name('create_bud');
+Route::post('/{id}/update_bud', [BudgetController::class, "update_bud"])->name('update_bud');
+Route::post('/{id}/delete_bud', [BudgetController::class, "delete_bud"])->name('delete_bud');
 
 Auth::routes();

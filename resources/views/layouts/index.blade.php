@@ -94,6 +94,10 @@
                                 <div class="sb-nav-link-icon">  </div>
                                 Payments
                             </a>
+                            <a class="nav-link" href="{{ route('budgets') }}">
+                                <div class="sb-nav-link-icon">  </div>
+                                Budgets
+                            </a>
                             
                             
                             

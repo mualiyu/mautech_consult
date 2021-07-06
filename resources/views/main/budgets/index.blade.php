@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container-fluid">
-                        <h1 class="mt-4">Beneficiaries</h1>
+                        <h1 class="mt-4">Budgets</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">beneficiary</li>
+                            <li class="breadcrumb-item active">budgets</li>
                         </ol>
                         @if (session('message'))
                         <div class="alert alert-success" role="alert">
@@ -24,54 +24,48 @@
                                     <div class="col-3"></div>
                                     <div class="col-3"></div>
                                     <div class="col-3">
-                                        <a href="{{ route('show_add_beneficiary') }}" class="btn btn-primary" ><i class="">+</i> Add Beneficiary</a>
+                                        <a href="{{ route('show_add_budget') }}" class="btn btn-primary" ><i class="">+</i> Add Budget</a>
                                     </div>
                                 </div>
                                 <div class="table-responsive" style="">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Code</th>
-                                                <th>Account</th>
-                                                <th>Bank</th>
-                                                <th>Tin</th>
-                                                <th>Tag</th>
-                                            </tr>
+                                                <th>Type</th>
+                                                <th>Account Code</th>
+                                                <th>Amount</th>
+						                        <th>Date</th>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Code</th>
-                                                <th>Account</th>
-                                                <th>Bank</th>
-                                                <th>Tin</th>
-                                                <th>Tag</th>
+                                                <th>Type</th>
+                                                <th>Account Code</th>
+                                                <th>Amount</th>
+                                                <th>Date</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            @foreach ($beneficiaries as $beneficiary)    
+                                            @foreach ($budgets as $budget)    
                                             <tr>
                                                 <td>
-                                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">{{$beneficiary->name}}</a>
+                                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">{{$budget->description}}</a>
                                                         <ul class="dropdown-menu">
-                                                            <li align="center"><b>{{$beneficiary->name}}</b></li>
+                                                            <li align="center"><b>{{$budget->description}}</b></li>
                                                             <hr>
-                                                            <li style="margin-left: 6px;"><a href="{{route('show_edit_beneficiary', ['id'=>$beneficiary->id])}}" class="btn btn-success"><i class="fas fa-edit"></i> Edit Beneficiary</a></li>
+                                                            <li style="margin-left: 6px;"><a href="{{route('show_edit_budget', ['id'=>$budget->id])}}" class="btn btn-success"><i class="fas fa-edit"></i> Edit Budget</a></li>
                                                             <li style="margin-left: 6px;">
-                                                                <form method="post" action="{{route('delete_ben', ['id'=>$beneficiary->id])}}">
+                                                                <form method="post" action="{{route('delete_bud', ['id'=>$budget->id])}}">
                                                                     @csrf
-                                                                    <input type="hidden" name="Ben_id" value="{{$beneficiary->id}}">
-                                                                <button href="#" class="btn btn-warning">Delete Beneficiary</button>
+                                                                    <input type="hidden" name="Ben_id" value="{{$budget->id}}">
+                                                                <button href="#" class="btn btn-warning">Delete Budget</button>
                                                                 </form>
                                                               </li>
                                                         </ul>
                                                 </td>
-                                                <td>{{$beneficiary->code}}</td>
-                                                <td>{{$beneficiary->account}}</td>
-                                                <td>{{$beneficiary->bank}}</td>
-                                                <td>{{$beneficiary->tin}}</td>
-                                                <td>{{$beneficiary->tag}}</td>
+                                                <td>{{$budget->account_code}}</td>
+                                                <td>N-{{$budget->amount}}</td>
+                                                <?php $due = explode(' ', $budget->created_at); $date = explode('-', $due[0]); $bud_date = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+                                                <td>{{$bud_date}}</td>
                                             </tr>
                                             @endforeach
                                             

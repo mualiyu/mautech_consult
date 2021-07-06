@@ -62,6 +62,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label class="small mb-1" for="tag">Tag</label>
+                                    <input name="tag" value="{{$beneficiary->tag}}" class="form-control py-4" id="tag" type="text" placeholder="Enter Tag" />
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
                         <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block" name="submit">Edit Beneficiary</button></div>
                     </form>
                 </div>

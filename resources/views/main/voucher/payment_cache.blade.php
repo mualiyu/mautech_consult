@@ -7,7 +7,7 @@
                             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Create Voucher</li>
                         </ol>
-                        @if (session('message'))
+                        @if (session('messages'))
                         <div class="alert alert-success" role="alert">
                             {{ $messages ?? '' }}
                         </div>
@@ -41,6 +41,7 @@
                                                 <th>Amount</th>
                                                 <th>Description</th>
                                                 <th>Tax</th>
+                                                <th>Budget</th>
                                             </tr>
                                         </thead>
                                         
@@ -49,6 +50,7 @@
                                             <tr>
                                                 <?php $beneficiary = \App\Beneficiary::find($payment['data']['beneficiary']) ?>
                                                 <?php $tax = \App\Tax::find($payment['data']['tax']) ?>
+                                                <?php $budget = \App\Budget::find($payment['data']['budget']) ?>
                                                 <td>
                                                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">{{$beneficiary->name}}</a>
                                                         <ul class="dropdown-menu">
@@ -66,6 +68,7 @@
                                                 <td>N{{$payment['data']['amount']}}</td>
                                                 <td>{{$payment['data']['description']}}</td>
                                                 <td>{{$tax->type ?? 'Null'}}</td>
+                                                <td>{{$budget->description}}</td>
                                                 
                                             </tr>
                                             @endforeach
@@ -113,6 +116,14 @@
                                                 <select name="beneficiary" class="form-control" id="beneficiary" aria-describedby="nameHelp" placeholder="Select" >
                                                     @foreach ($beneficiaries as $beneficiary)
                                                     <option value="{{$beneficiary->id}}">{{$beneficiary->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="budget">Payment Type <small>Budget</small></label>
+                                                <select name="budget" class="form-control" id="budget" aria-describedby="nameHelp" placeholder="Select" >
+                                                    @foreach ($budgets as $budget)
+                                                    <option value="{{$budget->id}}">{{$budget->description}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

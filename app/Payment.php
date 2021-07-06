@@ -8,6 +8,7 @@ use App\Beneficiary;
 use App\Tax;
 use App\Voucher;
 use App\Mandate;
+use App\Budget;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -36,5 +37,10 @@ class Payment extends Model
     public function mandate(): HasMany
     {
         return $this->hasMany(mandate::class);
+    }
+
+    public function budget(): BelongsTo
+    {
+        return $this->belongsTo(Budget::class);
     }
 }

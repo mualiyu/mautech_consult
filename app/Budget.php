@@ -4,18 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Budget;
+use App\Voucher;
+use App\Payment;
 
-class Voucher extends Model
+class Budget extends Model
 {
     protected $fillable = [
-        'pvno', 'totalamount',
+        'account_code', 'description', 'amount'
     ];
 
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
     }
-
 }

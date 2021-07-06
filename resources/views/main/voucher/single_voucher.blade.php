@@ -39,6 +39,7 @@
                                                 <th>Description</th>
                                                 <th>voucher</th>
                                                 <th>Tax</th>
+                                                <th>Budget</th>
                                                 <th>Due Date</th>
                                             </tr>
                                         </thead>
@@ -52,6 +53,7 @@
                                                     {{-- {{ $beneficiary = \App\Beneficiary::find($payment->beneficiary_id) }} --}}
                                                     <?php $beneficiary = Illuminate\Support\Facades\DB::table("beneficiaries")->where('id','=', $payment->beneficiary_id)->get() ?>
                                                     <?php $voucher = \App\Voucher::find($payment->voucher_id) ?>
+                                                    <?php $budget = \App\Budget::find($payment->budget_id) ?>
                                                     @if ($payment->tax_id == 0)
                                                         <?php $tax = "None" ?>
                                                     @else
@@ -79,6 +81,7 @@
                                                 <td>{{$payment->description}}</td>
                                                 <td>{{$voucher->pvno}}</td>
                                                 <td>{{$tax->type ?? 'Null'}}</td>
+                                                <td>{{$budget->description}}</td>
                                                 <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
                                                 <td>{{$duedate}}</td>
                                             </tr>

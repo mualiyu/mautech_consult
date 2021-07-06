@@ -43,6 +43,7 @@ class BeneficiariesController extends Controller
             "account" => "string",
             "bank" => "string",
             "tin" => "string",
+            "tag" => "string|nullable",
         ]);
 
         if ($validator->fails()) {
@@ -58,9 +59,11 @@ class BeneficiariesController extends Controller
             "account" => $request->input("account"),
             "bank" => $request->input("bank"),
             "tin" => $request->input("tin"),
+            "tag" => $request->input("tag"),
         ];
 
-        Beneficiary::create($arrayToInsert);
+        $ben = Beneficiary::create($arrayToInsert);
+        DB::table('beneficiaries')->where('id', '=', $ben->id)->update(["tag"=>$request->tag]);
         // DB::table('beneficiaries')->insert($arrayToInsert);
 
         return redirect()->route("beneficiaries")->with(['message'=> "New beneficiary is added"]);
@@ -82,6 +85,7 @@ class BeneficiariesController extends Controller
             "account" => "string",
             "bank" => "string",
             "tin" => "string",
+            "tag" => "string|nullable",
         ]);
 
         if ($validator->fails()) {
@@ -96,6 +100,7 @@ class BeneficiariesController extends Controller
             "account" => $request->input("account"),
             "bank" => $request->input("bank"),
             "tin" => $request->input("tin"),
+            "tag" => $request->input("tag"),
         ];
 
         DB::table('beneficiaries')->where('id', '=', $id)->update($arrayToUpdate);
