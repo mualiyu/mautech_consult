@@ -87,24 +87,27 @@ class VouchersController extends Controller
             $totalAmount = $amount;
         }
 
-        //checking amount in payments table
-        $payments = Payment::where('budget_id', '=', $request->budget)->get();
-        $amount_r = [];
-        foreach ($payments as $p) {
-            // $amount_p = $amount_p + $p->amount; 
-            array_push($amount_r, $p->amount);
-        }
-        $amount_p = 0; 
-        for ($i=0; $i < count($amount_r); $i++) { 
-            $amount_p = $amount_p + $amount_r[$i];
-        }
+        if($request->budget){
+            //checking amount in payments table
+            $payments = Payment::where('budget_id', '=', $request->budget)->get();
+            $amount_r = [];
+            foreach ($payments as $p) {
+                // $amount_p = $amount_p + $p->amount; 
+                array_push($amount_r, $p->amount);
+            }
+            $amount_p = 0; 
+            for ($i=0; $i < count($amount_r); $i++) { 
+                $amount_p = $amount_p + $amount_r[$i];
+            }
 
+            $t_Amount = $totalAmount+$amount_p;
 
-        $t_Amount = $totalAmount+$amount_p;
-
-        $budget = Budget::find($request->budget);
-        if ($t_Amount > $budget->amount) {
-            return redirect('/create_voucher')->with(['errors' => " Sorry you have reached your maximum Budget For this year. Please Increase your budget to get this done!"]);
+            $budget = Budget::find($request->budget);
+            if ($t_Amount > $budget->amount) {
+                return redirect('/create_voucher')->with(['errors' => " Sorry you have reached your maximum Budget For this year. Please Increase your budget to get this done!"]);
+            }
+        }else{
+            return redirect('/create_voucher')->with(['errors' => " Sorry Budget not found. Make sure you have Added budget to the system!"]);
         }
 
         // dd($t_Amount);
@@ -182,12 +185,13 @@ class VouchersController extends Controller
                     'duedate' => date('d/m/y'),
                     'budget_id' => $budget_id,
                     'tax_id' => $tax_id,
+                    'approve' => 0,
                 ];
                 //dd($paymentArray);
 
                 $newPayment = Payment::create($paymentArrayy);
 
-                DB::table('payments')->where('id', '=', $newPayment->id)->update(['budget_id'=>$budget_id]);
+                DB::table('payments')->where('id', '=', $newPayment->id)->update(['budget_id'=>$budget_id, 'approve' => 0]);
 
             }
 
@@ -228,7 +232,9 @@ class VouchersController extends Controller
     {
         $voucher = Voucher::find($id);
         $payments = DB::table('payments')->where('voucher_id', '=', $id)->get();
+        $is_approved = Payment::where('voucher_id', '=', $id)->first();
+        // dd($is_approved->approve);
 
-        return view('main.voucher.single_voucher')->with(['payments' => $payments, "voucher" => $voucher]);
+        return view('main.voucher.single_voucher')->with(['payments' => $payments, "voucher" => $voucher, "is_approved" => $is_approved->approve]);
     }
 }

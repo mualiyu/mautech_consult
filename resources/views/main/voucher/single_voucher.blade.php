@@ -93,15 +93,17 @@
                                             <b>No payment</b>
                                         </tbody>
                                         @endif
-                                    </table>
+                                    </table><br>
+                                    @if($is_approved)
                                     <div class="row">
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div class="col-3">
-                                        <a href="{{route('create_pdf_voucher', ['id'=> $voucher->id])}}" class="btn btn-primary"> Print Voucher</a>
+                                        <div class="col-3"></div>
+                                        <div class="col-3"></div>
+                                        <div class="col-3"></div>
+                                        <div class="col-3">
+                                            <a href="{{route('create_pdf_voucher', ['id'=> $voucher->id])}}" class="btn btn-primary"> Print Voucher</a>
+                                        </div>
                                     </div>
-                                </div>
+                                    @endif
                             
                             </div>
                         </div>

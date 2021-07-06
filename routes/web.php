@@ -55,6 +55,7 @@ Route::post('/{id}/delete_payment_from_local', [VouchersController::class, "dele
 Route::post('/create_voucher_and_payments', [VouchersController::class, "create_voucher_and_payments"])->name('create_voucher_and_payments');
 
 Route::get('/payments', [PaymentsController::class, "index"])->name('payments');
+Route::post('/update_payment/{id}', [PaymentsController::class, "update_payment"])->name('update_payment');
 Route::post('/{id}/delete_payment', [PaymentsController::class, "delete_payment"])->name('delete_payment');
 
 
