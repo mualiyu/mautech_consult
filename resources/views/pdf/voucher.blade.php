@@ -7,7 +7,7 @@
     </style>
 </head>
  <body>
-     <h2 style="text-align: center; margin:;">
+     <h2 style="text-align: center; margin:0px auto;">
         <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}">
     </h2>
 <h2 style="text-align: center; margin:5px;">

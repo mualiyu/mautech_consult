@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
 	<title>Mandate-{{$mandateno}}</title>
-	<link rel="stylesheet" href="{{asset('css/styles.css')}}">
+	{{-- <link rel="stylesheet" href="{{asset('css/styles.css')}}"> --}}
 	<style type="text/css">
     body{
         text-align: center;
@@ -20,13 +20,13 @@
     }
 		
     td{
-        border: 0.5px solid black;
+        border: px solid black;
     }
 	</style>
 </head>
 <body>
     <h2 style="text-align: center; margin:;">
-        {{-- <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}"> --}}
+        <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}">
     </h2>
 <h2 style="text-align: center; margin:5px;">
 <strong>MODIBBO ADAMA UNIVERSITY, YOLA</strong></h2>

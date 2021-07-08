@@ -4,7 +4,7 @@
 	<meta http-equiv="content-type" content="text/html;"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>CashBook-(<?= Date('d/m/20y') ?>)</title>
-	<link rel="stylesheet" href="{{asset('css/styles.css')}}">
+	{{-- <link rel="stylesheet" href="{{asset('css/styles.css')}}"> --}}
 	<style type="text/css">
     html{
         width: 100%;
@@ -35,7 +35,7 @@
 </head>
 <body>
     <h2 style="text-align: center; margin:;">
-        {{-- <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}"> --}}
+        <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}">
     </h2>
 <h2 style="text-align: center; margin:5px;">
 <strong>MODIBBO ADAMA UNIVERSITY, YOLA</strong></h2>
