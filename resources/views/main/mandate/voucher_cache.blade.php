@@ -62,7 +62,7 @@
                                                 <td>{{$payment->duedate}}</td>
                                                 <td>{{$beneficiary[0]->account}}</td>
                                                 <td>{{$payment->description}}</td>
-                                                <td>N{{$payment->amount}}</td>
+                                                <td>NGN {{number_format($payment->amount)}}</td>
                                             </tr>
                                             @endforeach    
 					    @endforeach
@@ -105,10 +105,15 @@
                                       <div class="modal-header">
                                         <h5 class="modal-title" id="staticBackdropLabel">Select Voucher(s)</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
+                                            <span aria-hidden="true">&times;</span>
                                         </button>
-                                      </div>
-                                      <div class="modal-body">
+                                    </div>
+                                    <div class="modal-body">
+                                        @if (!count($vouchers) > 0)    
+                                        <div class="alert alert-warning" role="alert">
+                                              <span>{{!count($vouchers) > 0 ? 'Please make sure your Vouchers is registerd!' : ''}}</span>
+                                        </div>
+                                        @endif
                                         <form action="{{route('create_cache_mandate')}}" method="POST">
                                             @csrf
                                                 @foreach ($vouchers as $voucher)
@@ -118,7 +123,7 @@
                                                 </div>
                                                 @endforeach
                                             <div class="form-group">
-                                                <input name="submit" class="btn btn-success" id="submit" type="submit" aria-describedby="nameHelp" value="Add to cache" />
+                                                <input name="submit" {{!count($vouchers) > 0 ? 'disabled' : ''}} class="btn btn-success" id="submit" type="submit" aria-describedby="nameHelp" value="Add to cache" />
                                             </div>
                                         </form>
                                       </div>

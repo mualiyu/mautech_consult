@@ -11,8 +11,8 @@ class Tax extends Model
         'percentage', 'type', 'created_at', 'updated_at'
     ];
 
-    public function payments(): HasMany
-    {
-        return $this->hasMany(Payment::class);
-    }
+    // public function payments(): HasMany
+    // {
+    //     return $this->hasMany(Payment::class);
+    // }
 }

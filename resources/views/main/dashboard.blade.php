@@ -30,7 +30,7 @@
                         <?php $payment = \App\Payment::find($mandate->payment_id) ?>
  			<?php $due = explode(' ', $payment->duedate); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
 
-			<li>{{$duedate}}, {{$mandate->mandateno}}, {{$voucher->pvno}}, N{{$voucher->totalamount}}  </li>
+			<li>{{$duedate}}, {{$mandate->mandateno}}, {{$voucher->pvno}}, NGN{{number_format($voucher->totalamount)}}  </li>
 		@endforeach
 		</ul>
 
@@ -42,7 +42,7 @@
 	<div class="card-body">
 	        <h2>Payment History</h2>
 		<ul>
-		<li><b>Date, Voucher, Beneficiary, Description: </b></li><br>
+		<li><b>Date, Voucher, Beneficiary, Description, Payment Amount: </b></li><br>
 		@foreach($payments as $payment)
 			<?php $beneficiaries = Illuminate\Support\Facades\DB::table("beneficiaries")->where('id','=', $payment->beneficiary_id)->get() ?>
 			<?php $beneficiary = App\Beneficiary::find($payment->baneficiary_id); ?>
@@ -50,10 +50,10 @@
 			<?php $voucher = \App\Voucher::find($payment->voucher_id) ?>
 
 			<li>{{$duedate}}, {{$voucher->pvno}}, 
-@foreach($beneficiaries as $ben)
-{{$ben->name}},
-@endforeach
- {{$payment->description}} </li>
+                @foreach($beneficiaries as $ben)
+                {{$ben->name}},
+                @endforeach
+            {{$payment->description}}, NGN{{number_format($payment->amount)}} </li>
 		@endforeach
 		</ul>
 	</div>

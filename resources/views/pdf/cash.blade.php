@@ -25,7 +25,7 @@
 {{-- heads row --}}
         <tr style="height:26.8pt;">
             <td colspan="{{$nm}}" style="width:; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:15pt;"><span style="font-family:'Liberation Serif';">MODIBBO ADAMA UNIVERSITY OF TECHNOLOGY, YOLA</span></p>
+                <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:15pt;"><span style="font-family:'Liberation Serif';">MODIBBO ADAMA UNIVERSITY, YOLA</span></p>
             </td>
         </tr>
         <tr style="height:22.6pt;">

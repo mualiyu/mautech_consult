@@ -38,7 +38,7 @@
                                                 <th>Amount</th>
                                                 <th>Description</th>
                                                 <th>voucher</th>
-                                                <th>Tax</th>
+                                                <th>Tax Percent<small>(%)</small></th>
                                                 <th>Budget</th>
                                                 <th>Due Date</th>
                                             </tr>
@@ -47,6 +47,7 @@
                                         @if ($payments)
                                             
                                         <tbody>
+                                            <?php $i = 0; ?>
                                             @foreach ($payments as $payment)    
                                             <tr>
                                                 <td>
@@ -54,11 +55,7 @@
                                                     <?php $beneficiary = Illuminate\Support\Facades\DB::table("beneficiaries")->where('id','=', $payment->beneficiary_id)->get() ?>
                                                     <?php $voucher = \App\Voucher::find($payment->voucher_id) ?>
                                                     <?php $budget = \App\Budget::find($payment->budget_id) ?>
-                                                    @if ($payment->tax_id == 0)
-                                                        <?php $tax = "None" ?>
-                                                    @else
-                                                    <?php $tax = \App\Tax::find($payment->tax_id) ?>
-                                                    @endif
+                                                    
 
                                                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                                                         @foreach ($beneficiary as $item)
@@ -77,14 +74,25 @@
                                                               </li>
                                                         </ul>
                                                 </td>
-                                                <td>N{{$payment->amount}}</td>
+                                                <td>NGN <span id="amount[<?= $i; ?>]">{{number_format($payment->amount)}}</span></td>
                                                 <td>{{$payment->description}}</td>
                                                 <td>{{$voucher->pvno}}</td>
-                                                <td>{{$tax->type ?? 'Null'}}</td>
-                                                <td>{{$budget->description}}</td>
+                                                <td>{{$payment->tax_percent ?? '0'}}%</td>
+                                                <td>{{$budget->description ?? 'none'}}</td>
                                                 <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
                                                 <td>{{$duedate}}</td>
                                             </tr>
+                                            
+                                            {{-- <script>
+                                            //     function numberWithCommas'<?= $i?>'(x) {
+                                            //        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                            //        }
+                                               
+                                            //     document.getElementById('amount[<?= $i ?>]').innerHTML=numberWithCommas'<?= $i?>'($("#amount[<?= $i ?>]").text());
+                                            // //    $(document).ready( function () {
+                                            // //    });
+                                                </script> --}}
+                                                <?php $i++; ?>  
                                             @endforeach
                                             
                                         </tbody>
@@ -100,7 +108,7 @@
                                         <div class="col-3"></div>
                                         <div class="col-3"></div>
                                         <div class="col-3">
-                                            <a href="{{route('create_pdf_voucher', ['id'=> $voucher->id])}}" class="btn btn-primary"> Print Voucher</a>
+                                            <a href="{{route('create_pdf_voucher', ['id'=> $voucher->id])}}" target="_blank" class="btn btn-primary"> Print Voucher</a>
                                         </div>
                                     </div>
                                     @endif
@@ -113,5 +121,17 @@
 @section('script')
  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
  <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
- <script src="js/datatables-demo.js"></script>   
+ <script src="js/datatables-demo.js"></script> 
+ <script>
+    // function numberWithCommas(x) {
+    //    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    //    }
+   
+//    $(document).ready( function () {
+//        for (let i = 0; i < {<?= $i?>}; i++) {
+//         //    const element = array[i];
+//             document.getElementById('amount[i]').innerHTML=numberWithCommas($("#amount[i]").text());
+//        }
+//    });
+    </script>  
 @endsection

@@ -54,11 +54,7 @@
                                                     <?php $beneficiary = Illuminate\Support\Facades\DB::table("beneficiaries")->where('id','=', $mandate->beneficiary_id)->get() ?>
                                                     <?php $voucher = \App\Voucher::find($mandate->voucher_id) ?>
                                                     <?php $payment = \App\Payment::find($mandate->payment_id) ?>
-                                                    @if ($mandate->tax_id == 0)
-                                                        <?php $tax = "None" ?>
-                                                    @else
-                                                        <?php $tax = \App\Tax::find($mandate->tax_id) ?>
-                                                    @endif
+                                                    
 
                                                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                                                         @foreach ($beneficiary as $item)
@@ -67,7 +63,7 @@
                                                     </a>
                                                         
                                                 </td>
-                                                <td>N{{$payment->amount}}</td>
+                                                <td>NGN {{number_format($payment->amount)}}</td>
                                                 <?php $due = explode(' ', $payment->duedate); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
                                                 <td>{{$duedate}}</td>
                                                 <td>{{$beneficiary[0]->code}}</td>
@@ -89,7 +85,7 @@
                                     <div class="col-3"></div>
                                     <div class="col-3"></div>
                                     <div class="col-3">
-                                        <a href="{{route('create_pdf_mandate', ['id'=>$i_d])}}" class="btn btn-primary"> Print Mandate</a>
+                                        <a href="{{route('create_pdf_mandate', ['id'=>$i_d])}}" target="_blank" class="btn btn-primary"> Print Mandate</a>
                                     </div>
                                 </div>
                             

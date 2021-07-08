@@ -63,7 +63,7 @@
                                                         </ul>
                                                 </td>
                                                 <td>{{$budget->account_code}}</td>
-                                                <td>N-{{$budget->amount}}</td>
+                                                <td>NGN {{number_format($budget->amount)}}</td>
                                                 <?php $due = explode(' ', $budget->created_at); $date = explode('-', $due[0]); $bud_date = $date[0].'/'.$date[1].'/'.$date[2]; ?>
                                                 <td>{{$bud_date}}</td>
                                             </tr>

@@ -15,12 +15,12 @@
     @endif
     <br>
     <div class="row">
-        <div class="col-3">
+        <div class="col-md-3 col-sm-3">
             <button onclick="window.history.go(-1)" class="btn btn-secondary"><i class="fas fas-goto"></i> Back</button>
         </div>
-        <div class="col-3"></div>
-        <div class="col-3"></div>
-        <div class="col-3"></div>
+        <div class="col-md-3 col-sm-3"></div>
+        <div class="col-md-3 col-sm-3"></div>
+        <div class="col-md-3 col-sm-3"></div>
     </div>
     <div class="row">
         <div class="col-md-3 col-sm-3"></div>

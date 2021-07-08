@@ -6,17 +6,21 @@
         }
     </style>
 </head>
-
+ <body>
+     <h2 style="text-align: center; margin:;">
+        {{-- <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}"> --}}
+    </h2>
 <h2 style="text-align: center; margin:5px;">
-<img style="width:65px; height:60px;" src="{{ asset('img/logo-mautech.png') }}">&nbsp; &nbsp;&nbsp;
-<strong>MAUTECH CONSULTANCY SERVICES</strong></h2>
-<h4 style="text-align: center; margin:5px;"><strong>Modibbo adama university of technology, Yola</strong></h4>
+<strong>MAU CONSULTANCY SERVICES</strong></h2>
+<h4 style="text-align: center; margin:5px;"><strong>Modibbo adama university, Yola</strong></h4>
 <h3 style="text-align: center; margin:5px; margin-bottom:10px;"><span style="text-decoration: underline;">DOMESTIC PAYMENT VOUCHER</span></h3>
-<p style="padding-left: ; text-align: center; margin:0;">P.V.No: <span style="text-decoration: underline">{{$voucher[0]->pvno}}</span> &nbsp;&nbsp;
-    Date: <span style="text-decoration: underline">{{$voucher[0]->created_at}}</span></p>
+<div style="display: block; text-align:center; margin:0;">
+        <span style="left: 0%; float:left;">P.V.No: <span style="text-decoration: underline">{{$voucher[0]->pvno}}</span></span>
+        <span style="right: 0%; float:right;">Date: <span style="text-decoration: underline">{{$voucher[0]->created_at}}</span>________</span>
+</div><br>
     <?php $i=0; $payNo = $payments->count(); ?>
-    <p style="padding-left: ; text-align: center; margin:5px">
-        Payee: <span style="text-decoration: underline">
+<div style="display: block; text-align:center; margin:0;">
+        <span style="left:0%; float:left;">Payee: <span style="text-decoration: underline">
             @if ($payments->count() <= 3)
                 @foreach ($payments as $payment)
                     <?php $beneficiary = Illuminate\Support\Facades\DB::table('beneficiaries')->where('id','=', $payment->beneficiary_id)->get(); ?>
@@ -29,19 +33,29 @@
                 @endfor
                     And Others
             @endif
-        </span>
-    </p>
+        </span> </span>
+        <span style="right:0%; float:right;">Debit: <span style="text-decoration:;">________________________&nbsp;</span></span>
     
-<p style="padding-left: 30px; text-align: center; margin:5px;">Address: ________________________________&nbsp; Cheque No: ____________</p>
-<p style="padding-left: 30px; text-align: center; margin:5px;">________________________________&nbsp; S.R.V/L.P.O No ________________</p>
+</div><br>
+
+<div style="display: block; text-align:center; margin:0;"">
+    <span style=" left:0%; float:left;">Address: ________________________________&nbsp;</span>
+    <span style="right:0%; float:right;"> Cheque No: ____________________</span>
+</div><br>
+
+<div style="display: block; text-align:center; margin:0;"">
+    <span style="left:0%; float:left;">________________________________&nbsp;</span>
+    <span style="left:0%; float:right;"> S.R.V/L.P.O No ________________</span>
+</div><br><br>
+
 
 <table style="width: 98%; height:; margin-left: 10px; border: solid black;" cellspacing="1">
 <tbody>
 <tr style="height: 33px;">
 <td style="width: 25%; height: ; text-align: center;">&nbsp; DATE</td>
-<td style="width: 50%; height: ; text-align: center;">&nbsp;Description of service</td>
-<td style="width: 25%; text-align: left; height: ;">
-<table style="height:; width:100%">
+<td style="width: 55%; height: ; text-align: center;">&nbsp;Description of service</td>
+<td style="width: 20%; text-align: center; height: ;">
+<table style="height:; width:100%;">
 <tbody>
 <tr>
 <td style="width: 100%;  border: 1px solid white; text-align: center;">Amount</td>
@@ -51,8 +65,8 @@
 <table style="height: 25px; width: 100%;">
 <tbody>
 <tr>
-<td style="width: 65%; text-align: center;">N</td>
-<td style="width: 35%; text-align: center;">k&nbsp;</td>
+<td style="width: ; text-align: center;">N</td>
+<td style="width: ; text-align: center;">k&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -67,14 +81,14 @@
 <?php  $duedate = explode(' ', $payment->created_at)  ?>
 <tr style="text-align: left; height: ;">
 <td style="width: 25%; height:;">&nbsp; {{$duedate[0]}}</td>
-<td style="width: 50%%; height: ;">
+<td style="width: 55%%; height: ;">
 <p>&nbsp; {{$beneficiary[0]->name}}: {{$payment->description}}</p>
 </td>
-<td style="width: 50%; height: ;">
-<table style="height: ; width: :">
+<td style="width: 20%; height: ;">
+<table style="height: ; width: 100%;">
 <tbody>
-<tr style="width: 100%;">
-<td style="width: 65%;  border: 0px solid black;">&nbsp; {{$payment->amount}}</td>
+<tr style="width:;">
+<td style="width: 65%;  border: 0px solid black;">&nbsp; {{number_format($payment->amount)}}</td>
 <td style="width: 35%; border: 0px solid black;">&nbsp; .00</td>
 </tr>
 </tbody>
@@ -85,12 +99,12 @@
 @endforeach
 
 <tr style="text-align: left; height: ;">
-<td style="width: 74px; height:;" colspan="2">&nbsp; Total amount in words: 
-    <span style="text-decoration: underline" id="t_amount"> {{$voucher[0]->totalamount}} </span>
+<td style="width: 80%; height:;" colspan="2">&nbsp; Total amount in words: 
+    <span style="text-decoration:; text-transform: uppercase;" id="t_amount"><small> {{$amountInWords}}</small> </span>
     <input type="hidden" value="{{$voucher[0]->totalamount}}" name="" id="num">
 </td>
-<td style="width: 132.772px; height: ;">
-&nbsp;&nbsp;&nbsp;<span style="font-size: 20px">N {{$voucher[0]->totalamount}}</span> 
+<td style="width: 20%; height: ;">
+&nbsp;&nbsp;&nbsp;<span style="font-size: 20px"><small>NGN <span id="t_amount_c">{{number_format($voucher[0]->totalamount)}}</span></small></span> 
 </td>
 </tr>
 </tbody>
@@ -129,90 +143,28 @@
 <p style="padding-left: 30px; text-align: left; margin-bottom:10px;">&nbsp;</p>
 <p style="padding-left: 30px; text-align: left; margin-bottom:10px;"><span style="text-decoration: underline;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="text-decoration: underline;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
 <p style="padding-left: 30px; text-align: left; margin-bottom:10px;">&nbsp; &nbsp; Signature of receiver&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Date</p>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 <script>
-    function convertNumberToWords(amount) {
-   var words = new Array();
-   words[0] = '';
-   words[1] = 'One';
-   words[2] = 'Two';
-   words[3] = 'Three';
-   words[4] = 'Four';
-   words[5] = 'Five';
-   words[6] = 'Six';
-   words[7] = 'Seven';
-   words[8] = 'Eight';
-   words[9] = 'Nine';
-   words[10] = 'Ten';
-   words[11] = 'Eleven';
-   words[12] = 'Twelve';
-   words[13] = 'Thirteen';
-   words[14] = 'Fourteen';
-   words[15] = 'Fifteen';
-   words[16] = 'Sixteen';
-   words[17] = 'Seventeen';
-   words[18] = 'Eighteen';
-   words[19] = 'Nineteen';
-   words[20] = 'Twenty';
-   words[30] = 'Thirty';
-   words[40] = 'Forty';
-   words[50] = 'Fifty';
-   words[60] = 'Sixty';
-   words[70] = 'Seventy';
-   words[80] = 'Eighty';
-   words[90] = 'Ninety';
-   amount = amount.toString();
-   var atemp = amount.split(".");
-   var number = atemp[0].split(",").join("");
-   var n_length = number.length;
-   var words_string = "";
-   if (n_length <= 9) {
-       var n_array = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
-       var received_n_array = new Array();
-       for (var i = 0; i < n_length; i++) {
-           received_n_array[i] = number.substr(i, 1);
-       }
-       for (var i = 9 - n_length, j = 0; i < 9; i++, j++) {
-           n_array[i] = received_n_array[j];
-       }
-       for (var i = 0, j = 1; i < 9; i++, j++) {
-           if (i == 0 || i == 2 || i == 4 || i == 7) {
-               if (n_array[i] == 1) {
-                   n_array[j] = 10 + parseInt(n_array[j]);
-                   n_array[i] = 0;
-               }
-           }
-       }
-       value = "";
-       for (var i = 0; i < 9; i++) {
-           if (i == 0 || i == 2 || i == 4 || i == 7) {
-               value = n_array[i] * 10;
-           } else {
-               value = n_array[i];
-           }
-           if (value != 0) {
-               words_string += words[value] + " ";
-           }
-           if ((i == 1 && value != 0) || (i == 0 && value != 0 && n_array[i + 1] == 0)) {
-               words_string += "Crores ";
-           }
-           if ((i == 3 && value != 0) || (i == 2 && value != 0 && n_array[i + 1] == 0)) {
-               words_string += "Lakhs ";
-           }
-           if ((i == 5 && value != 0) || (i == 4 && value != 0 && n_array[i + 1] == 0)) {
-               words_string += "Thousand ";
-           }
-           if (i == 6 && value != 0 && (n_array[i + 1] != 0 && n_array[i + 2] != 0)) {
-               words_string += "Hundred and ";
-           } else if (i == 6 && value != 0) {
-               words_string += "Hundred ";
-           }
-       }
-       words_string = words_string.split("  ").join(" ");
-   }
-   return words_string;
-}
+    function numberToWords(number) {  
+        var digit = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];  
+        var elevenSeries = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];  
+        var countingByTens = ['twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];  
+        var shortScale = ['', 'thousand', 'million', 'billion', 'trillion'];  
+  
+        number = number.toString(); number = number.replace(/[\, ]/g, ''); if (number != parseFloat(number)) return 'not a number'; var x = number.indexOf('.'); if (x == -1) x = number.length; if (x > 15) return 'too big'; var n = number.split(''); var str = ''; var sk = 0; for (var i = 0; i < x; i++) { if ((x - i) % 3 == 2) { if (n[i] == '1') { str += elevenSeries[Number(n[i + 1])] + ' '; i++; sk = 1; } else if (n[i] != 0) { str += countingByTens[n[i] - 2] + ' '; sk = 1; } } else if (n[i] != 0) { str += digit[n[i]] + ' '; if ((x - i) % 3 == 0) str += 'hundred '; sk = 1; } if ((x - i) % 3 == 1) { if (sk) str += shortScale[(x - i - 1) / 3] + ' '; sk = 0; } } if (x != number.length) { var y = number.length; str += 'point '; for (var i = x + 1; i < y; i++) str += digit[n[i]] + ' '; } str = str.replace(/\number+/g, ' '); return str.trim() + ".";  
+        
+        return number;
+    }
+
+    function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
 $(document).ready( function () {
- document.getElementById('t_amount').innerHTML=convertNumberToWords($("#t_amount").text());
+//  document.getElementById('t_amount').innerHTML=numberToWords($("#t_amount").text());
+ document.getElementById('t_amount_c').innerHTML=numberWithCommas($("#t_amount_c").text());
+//  document.getElementById('t_amount').innerHTML=convertNumberToWords($("#t_amount").text());
 });
 </script>
+ </body>

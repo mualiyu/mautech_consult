@@ -12,11 +12,12 @@
                             {{ $messages ?? '' }}
                         </div>
                         @endif
-                        
                         @if (session('errors'))
-                        <div class="alert alert-warning" role="alert">
-                            {{ $errors }}
-                        </div>
+                            <div class="alert alert-warning">
+                                <ul>
+                                    <li>{{ $errors }}</li>
+                                </ul>
+                            </div>
                         @endif
                         <div class="card mb-4">
                             <div class="card-body" style="width: 100%;">
@@ -40,7 +41,7 @@
                                                 <th>Beneficiary</th>
                                                 <th>Amount</th>
                                                 <th>Description</th>
-                                                <th>Tax</th>
+                                                <th>Tax percent<small>(%)</small></th>
                                                 <th>Budget</th>
                                             </tr>
                                         </thead>
@@ -49,7 +50,7 @@
                                             @foreach ($payment->payments as $payment)    
                                             <tr>
                                                 <?php $beneficiary = \App\Beneficiary::find($payment['data']['beneficiary']) ?>
-                                                <?php $tax = \App\Tax::find($payment['data']['tax']) ?>
+                                                {{--  $tax = \App\Tax::find($payment['data']['tax']) ?--}}
                                                 <?php $budget = \App\Budget::find($payment['data']['budget']) ?>
                                                 <td>
                                                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">{{$beneficiary->name}}</a>
@@ -65,9 +66,9 @@
                                                               </li>
                                                         </ul>
                                                 </td>
-                                                <td>N{{$payment['data']['amount']}}</td>
+                                                <td>NGN {{number_format($payment['data']['amount'])}}</td>
                                                 <td>{{$payment['data']['description']}}</td>
-                                                <td>{{$tax->type ?? 'Null'}}</td>
+                                                <td>{{$payment['data']['tax'] ?? '0'}}%</td>
                                                 <td>{{$budget->description}}</td>
                                                 
                                             </tr>
@@ -109,43 +110,55 @@
                                         </button>
                                       </div>
                                       <div class="modal-body">
+                                          @if (!count($beneficiaries) > 0)  
+                                          <div class="alert alert-warning" role="alert">
+                                              <span>{{!count($beneficiaries) > 0 ? 'Please make sure Beneficiary is registerd!' : ''}}</span>
+                                          </div>
+                                          @endif
                                         <form action="{{route('create_payments')}}" method="POST">
                                             @csrf
                                             <div class="form-group">
-                                                <label class="small mb-1" for="beneficiary">Beneficiary</label>
-                                                <select name="beneficiary" class="form-control" id="beneficiary" aria-describedby="nameHelp" placeholder="Select" >
+                                                <label class=" mb-1" for="beneficiary">Beneficiary</label>
+                                                <select name="beneficiary" required class="form-control" id="beneficiary" aria-describedby="nameHelp" placeholder="Select" >
                                                     @foreach ($beneficiaries as $beneficiary)
                                                     <option value="{{$beneficiary->id}}">{{$beneficiary->name}}</option>
                                                     @endforeach
+                                                    @if (!count($beneficiaries) > 0)
+                                                    <option>No data <small>(make sure you add beneficiary)</small></option>
+                                                    @endif
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label class="small mb-1" for="budget">Payment Type <small>Budget</small></label>
-                                                <select name="budget" class="form-control" id="budget" aria-describedby="nameHelp" placeholder="Select" >
+                                                <label class=" mb-1" for="budget">Payment Type <small>Budget</small></label>
+                                                <select name="budget" required class="form-control" id="budget" aria-describedby="nameHelp" placeholder="Select" >
                                                     @foreach ($budgets as $budget)
                                                     <option value="{{$budget->id}}">{{$budget->description}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label class="small mb-1" for="amount">Amount</label>
-                                                <input name="amount" class="form-control py-4" id="amount" type="number" step="any" aria-describedby="nameHelp" placeholder="Enter Amount" />
+                                                <label class="mb-1" for="amount">Amount</label>
+                                                <input name="amount" required class="form-control py-4" id="amount" type="number" step="any" aria-describedby="nameHelp" placeholder="Enter Amount" />
                                             </div>
                                             <div class="form-group">
-                                                <label class="small mb-1" for="description">Description</label>
-                                                <textarea name="description" class="form-control py-4" id="description" aria-describedby="nameHelp" placeholder="Enter Description" ></textarea>
+                                                <label class=" mb-1" for="description">Description</label>
+                                                <textarea name="description" required class="form-control py-4" id="description" aria-describedby="nameHelp" placeholder="Enter Description" ></textarea>
                                             </div>
+
                                             <div class="form-group">
-                                                <label class="small mb-1" for="tax">Tax (Optional)</label>
-                                                <select name="tax" class="form-control" id="tax" aria-describedby="nameHelp" placeholder="Select" >
-                                                   <option value="">None</option>
-                                                    @foreach ($taxes as $tax)
-                                                    <option value="{{$tax->id}}">{{$tax->type}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <label class=" mb-1" for="tax">Tax (Optional)</label>
+                                                @foreach ($taxes as $tax)
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="tax[]" type="checkbox" value="{{$tax->id}}" id="id_{{$tax->id}}">
+                                                    <label class="form-check-label" for="id_{{$tax->id}}">
+                                                        {{$tax->type}}<small>({{$tax->percentage}}%)</small>
+                                                    </label>
+                                                </div>
+                                                @endforeach
                                             </div>
+
                                             <div class="form-group">
-                                                <input name="submit" class="btn btn-success" id="submit" type="submit" aria-describedby="nameHelp" value="Add to cache" />
+                                                <input name="submit"  {{!count($beneficiaries) > 0 ? 'disabled' : ''}} class="btn btn-success" id="submit" type="submit" aria-describedby="nameHelp" value="Add to cache" />
                                             </div>
                                         </form>
                                       </div>

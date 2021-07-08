@@ -45,6 +45,9 @@
         </div>
         @if ($single_report)
         <div class="card mb-4">
+            <div class="card-header">
+                <b>{{$single_report[0]}}</b> Budget Report from <b>{{date('j M, Y', strtotime($date_range[0]))}}</b> to <b>{{date('j M, Y', strtotime($date_range[1]))}}</b>. <br>
+            </div>
             <div class="card-body">
                 <div class="table-responsive" style="">
 
@@ -60,9 +63,9 @@
                         <tbody>
                             <tr>
                                 <td>{{$single_report[0]}}</td>
-                                <td>{{$single_report[1]}}</td>
-                                <td>{{$single_report[2]}}</td>
-                                <td>{{$single_report[3]}}</td>
+                                <td>NGN {{number_format($single_report[1])}}</td>
+                                <td>NGN {{number_format($single_report[2])}}</td>
+                                <td>NGN {{number_format($single_report[3])}}</td>
                             </tr>
                         </tbody>
                         {{-- <tbody>

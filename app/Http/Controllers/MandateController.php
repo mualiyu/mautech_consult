@@ -43,6 +43,7 @@ class MandateController extends Controller
 
     public function show_create_mandate()
     {
+        // Cache::forget('mandates');
         $mandates = Cache::get("mandates");
 
         $vouchers = Voucher::all();
@@ -102,7 +103,6 @@ class MandateController extends Controller
                         'payment_id' => $payment->id,
                         'beneficiary_id'=> $beneficiary[0]->id,
                         'voucher_id'=> $voucher[0]->id,
-                        'tax_id'=> $payment->tax_id,
                         
                     ];
 

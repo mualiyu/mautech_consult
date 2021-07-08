@@ -26,10 +26,10 @@
                                     <div class="col-4">
                                         <div class="row">
                                             <div class="col-6">
-                                                <button type="button" class="btn btn-success" style="float: left;" data-toggle="modal" data-target="#staticBackdrop"> Select Range</button>
+                                                <button type="button" class="btn btn-success" {{!count($payments) > 0 ? 'disabled' : '' }} style="float: left;" data-toggle="modal" data-target="#staticBackdrop"> Select Range</button>
                                             </div>
                                             <div class="col-6">
-                                                <a href="{{ route('create_pdf_cashbook') }}" style="float: left" class="btn btn-primary" >Generate Cash book</a>
+                                                <a href="{{ !count($payments) > 0 ? '#' : route('create_pdf_cashbook') }}" {{!count($payments) > 0 ? '' : 'target="_blank"' }}  style="float: left" class="btn btn-primary btn-disabled" >Generate Cash book</a>
                                             </div>
                                         </div>
                                     </div>
@@ -43,7 +43,7 @@
                                                 <th>Amount</th>
                                                 <th>Description</th>
                                                 <th>voucher</th>
-                                                <th>Tax</th>
+                                                <th>Tax Percent<small>(%)</small></th>
                                                 <th>Due Date</th>
                                             </tr>
                                         </thead>
@@ -53,7 +53,7 @@
                                                 <th>Amount</th>
                                                 <th>Description</th>
                                                 <th>voucher</th>
-                                                <th>Tax</th>
+                                                <th>Tax Percent<small>(%)</small></th>
                                                 <th>Due Date</th>
                                             </tr>
                                         </tfoot>
@@ -65,11 +65,7 @@
                                             <tr>
                                                 <td><?php $beneficiary = Illuminate\Support\Facades\DB::table("beneficiaries")->where('id','=', $payment->beneficiary_id)->get() ?>
                                                     <?php $voucher = \App\Voucher::find($payment->voucher_id) ?>
-                                                    @if ($payment->tax_id == 0)
-                                                        <?php $tax = "None" ?>
-                                                    @else
-                                                        <?php $tax = \App\Tax::find($payment->tax_id) ?>
-                                                    @endif
+                                                    
 
                                                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> 
                                                         @foreach ($beneficiary as $item)
@@ -88,10 +84,10 @@
                                                               </li>
                                                         </ul>
                                                 </td>
-                                                <td>N{{$payment->amount}}</td>
+                                                <td>NGN {{number_format($payment->amount)}}</td>
                                                 <td>{{$payment->description}}</td>
                                                 <td>{{$voucher->pvno}}</td>
-                                                <td>{{$tax->type ?? 'Null'}}</td>
+                                                <td>{{$payment->tax_percent ?? '0'}}%</td>
                                                 <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
                                                 <td>{{$duedate ?? "Null"}}</td>
                                             </tr>
@@ -117,7 +113,7 @@
                                         </button>
                                       </div>
                                       <div class="modal-body">
-                                        <form action="{{route('create_pdf_cashbook_range')}}" method="POST">
+                                        <form action="{{route('create_pdf_cashbook_range')}}" method="POST" target="_blank">
                                             @csrf
                                             
                                             <div class="form-group" id="kk">

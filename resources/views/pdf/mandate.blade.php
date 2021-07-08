@@ -21,7 +21,7 @@
     <tbody>
         <tr style="height:26.8pt;">
             <td colspan="9" style="width:726.45pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:15pt;"><span style="font-family:'Liberation Serif';">MODIBBO ADAMA UNIVERSITY OF TECHNOLOGY, YOLA</span></p>
+                <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:15pt;"><span style="font-family:'Liberation Serif';">MODIBBO ADAMA UNIVERSITY, YOLA</span></p>
             </td>
         </tr>
         <tr style="height:22.6pt;">
@@ -36,7 +36,7 @@
             <td style="width:103.8pt; vertical-align:top;">
                 <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
             </td>
-            <td style="width:58.6pt; vertical-align:top;">
+            <td style="width:58.6pt; vertical-alig  n:top;">
                 <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
             </td>
             <td style="width:81.2pt; vertical-align:top;">
@@ -257,11 +257,7 @@
             <?php $voucher = \App\Voucher::find($mandate->voucher_id) ?>
             <?php $payment = \App\Payment::find($mandate->payment_id) ?>
              <?php array_push($amount_r, $payment->amount); ?>
-            @if ($mandate->tax_id == 0)
-                <?php $tax = "None" ?>
-            @else
-                <?php $tax = \App\Tax::find($mandate->tax_id) ?>
-            @endif
+            
             <tr>
                 <td style="width:82.9pt; vertical-align:top;">
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
@@ -270,7 +266,7 @@
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span>{{$beneficiary[0]->name}}</p>
                 </td>
                 <td style="width:45.6pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span>N{{$payment->amount}}</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span>N{{number_format($payment->amount)}}</p>
                 </td>
                 <td style="width:80.2pt; vertical-align:top;">
                     <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
@@ -313,7 +309,7 @@
 
             ?>
             <td style="width:58.6pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;N{{$amount}}</span></p>
+                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;N{{number_format($amount)}}</span></p>
             </td>
             <td style="width:81.2pt; vertical-align:top;">
                 <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>

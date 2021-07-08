@@ -29,10 +29,10 @@ class Payment extends Model
         return $this->belongsTo(Voucher::class);
     }
 
-    public function tax(): BelongsTo
-    {
-        return $this->belongsTo(Tax::class);
-    }
+    // public function tax(): BelongsTo
+    // {
+    //     return $this->belongsTo(Tax::class);
+    // }
 
     public function mandate(): HasMany
     {

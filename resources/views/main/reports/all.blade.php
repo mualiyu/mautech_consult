@@ -46,7 +46,7 @@
         @if ($budget_reports)
         <div class="card mb-4">
             <div class="card-header">
-                Report for All Budgets
+                Report for <b>All</b> Budgets from <b>{{date('j M, Y', strtotime($date_range[0]))}}</b> to <b>{{date('j M, Y', strtotime($date_range[1]))}}</b>.
             </div>
             <div class="card-body">
                 <div class="table-responsive" style="">
@@ -64,9 +64,9 @@
                             @foreach ($budget_reports as $b)    
                             <tr>
                                 <td>{{$b[0]}}</td>
-                                <td>{{$b[1]}}</td>
-                                <td>{{$b[2]}}</td>
-                                <td>{{$b[3]}}</td>
+                                <td>NGN{{number_format($b[1])}}</td>
+                                <td>NGN{{number_format($b[2])}}</td>
+                                <td>NGN{{number_format($b[3])}}</td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -20,21 +20,27 @@
 
         <div class="card mb-4">
             <div class="card-header">
-                Generate All Budgets 
+                Generate All Budgets  {{$set}}
             </div>
             <div class="card-body">
                 <form action="{{route('generate_reports')}}" method="post">
                     @csrf
-                    <input type="hidden" name="budget" value="all">
+                    @if ($set == "all")
+                    <input type="hidden" name="budget" value="{{$set}}">
+                    @else
+                    <input type="hidden" name="budget" value="{{$set}}">
+                    @endif
                     <div class="input-group mb-3 col">
                         <div class="input-group-prepend">
                           <button class="btn btn-secondary" disabled type="button" onclick="btn_color()" id="button-addon1 ch">Select Budget</button>
                         </div>
-                        <select class="form-control" disabled id="inputGroupSelect01" aria-describedby="button-addon1">
+                        <select class="form-control" disabled >
+                            @if ($set != "all")
+                            <?php $bbb = App\Budget::find($set); ?>
+                            <option value="{{$set}}">{{$bbb->description}}</option>
+                            @else
                             <option value="all">All (Budgets)</option>
-                            @foreach ($budgets as $budget)     
-                            <option value="{{$budget->id}}">{{$budget->description}}</option>
-                            @endforeach
+                            @endif
                         </select>
                     </div>
 
@@ -49,33 +55,7 @@
                 </form>
             </div>
         </div>
-        {{-- @if ($single_report)
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="table-responsive" style="">
-
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Budget</th>
-                                <th>Budget Amount</th>
-                                <th>Expenditure Amount</th>
-                                <th>Trial balance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{{$single_report[0]}}</td>
-                                <td>{{$single_report[1]}}</td>
-                                <td>{{$single_report[2]}}</td>
-                                <td>{{$single_report[3]}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        @endif --}}
+        
 
     </div>
 @endsection

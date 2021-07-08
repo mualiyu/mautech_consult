@@ -72,30 +72,74 @@ class ReportsController extends Controller
                 }
 
                 $budget_reports = $arr;
+
+                $date_range = [$from, $to];
         
                 // dd($budget_reports);
-                return view('main.reports.all')->with(['budgets' => $budgets, 'budget_reports' => $budget_reports]);
+                return view('main.reports.all')->with(['budgets' => $budgets, 'budget_reports' => $budget_reports, 'date_range'=> $date_range]);
             }
-            return view('main.reports.check')->with(['budgets' => $budgets, "all"=>1]);
+            return view('main.reports.check')->with(['budgets' => $budgets, "set"=>$b]);
+
         }else {
-            $budget = Budget::find($b);
-            $payments = Payment::where('budget_id', '=', $budget->id)->get();
+            // dd($d);
+            if ($d != 0) {
+                $daterange = \explode(' - ', $d);
+                
+                $from = $daterange[0];
+                $from = \explode('/', $from);
+                $from = $from[2].'-'.$from[0].'-'.$from[1];
 
-            $p_amount_r = [];
-            foreach ($payments as $p) {
-                array_push($p_amount_r, $p->amount);
-            }
-            $p_amount = 0;
-            for ($i=0; $i < count($p_amount_r); $i++) { 
-                $p_amount = $p_amount + $p_amount_r[$i];
+                $to = $daterange[1];
+                $to = \explode('/', $to);
+                $to = $to[2].'-'.$to[0].'-'.$to[1];
+                
+                $bud = Budget::find($b);
+
+                $payments = Payment::Where('budget_id','=',$b)->whereBetween('created_at', [$from." 00:00:00",$to." 23:59:59"])->get();
+
+                $p_amount_rr = [];
+                foreach ($payments as $p) {
+                    array_push($p_amount_rr, $p->amount);
+                }
+                    
+                $pp_amount = 0;
+                for ($i=0; $i < count($p_amount_rr); $i++) { 
+                    $pp_amount = $pp_amount + $p_amount_rr[$i];
+                }
+                    
+                $budget_amount_r = $bud->amount;
+                $trail_balance_r = $bud->amount - $pp_amount;
+
+                $single_report = [$bud->description, $budget_amount_r, $pp_amount, $trail_balance_r];
+
+                $date_range = [$from, $to];
+                ///test
+                // dd($buds);
+                return view('main.reports.single')->with(['budgets' => $budgets, 'single_report'=>$single_report, 'date_range'=> $date_range]);
             }
 
-            $budget_amount = $budget->amount;
-            $trail_balance = $budget->amount-$p_amount;
+            ////////
+
+            // $budget = Budget::find($b);
+            // $payments = Payment::where('budget_id', '=', $budget->id)->get();
+
+            // $p_amount_r = [];
+            // foreach ($payments as $p) {
+            //     array_push($p_amount_r, $p->amount);
+            // }
+            // $p_amount = 0;
+            // for ($i=0; $i < count($p_amount_r); $i++) { 
+            //     $p_amount = $p_amount + $p_amount_r[$i];
+            // }
+
+            // $budget_amount = $budget->amount;
+            // $trail_balance = $budget->amount-$p_amount;
             
-            $single_report = [$budget->description, $budget_amount, $p_amount, $trail_balance];
+            // $single_report = [$budget->description, $budget_amount, $p_amount, $trail_balance];
 
-            return view('main.reports.single')->with(['budgets' => $budgets, 'single_report'=>$single_report]);
+            // return view('main.reports.single')->with(['budgets' => $budgets, 'single_report'=>$single_report]);
+
+            return view('main.reports.check')->with(['budgets' => $budgets, "set"=>$b]);
         }
 
 

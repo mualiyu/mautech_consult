@@ -14,6 +14,7 @@ use App\Tax;
 use Facade\FlareClient\Time\Time;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class VouchersController extends Controller
 {
@@ -34,6 +35,7 @@ class VouchersController extends Controller
     public function show_create_voucher()
     {
 
+        // Cache::forget("payments");
         $payment = Cache::get("payments");
         // dd($payment);
         $beneficiaries = Beneficiary::all();
@@ -44,25 +46,42 @@ class VouchersController extends Controller
         return view('main.voucher.payment_cache')->with(['payment' => $payment, 'taxes' => $tax, 'beneficiaries' => $beneficiaries, 'budgets' => $budgets]);
     }
 
+
+
     public function create_payments(Request $request)
     {
         // $prevPayment = $request->session()->get('payments');
         $prevPayment = Cache::get('payments');
-
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'beneficiary' => 'Int',
             'amount' => 'Int',
             'description' => 'String',
-            'tax' => "Int|nullable",
+            'tax' => "nullable",
             'budget' => "Int"
         ]);
+
+        if ($validator->fails()) {
+            return redirect('/create_voucher')
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+
+        $tax = 0;
+
         if(!$request->tax){
             $amount = $request->amount;
         }else{
-            $tax = Tax::find($request->tax);
-            $tax_value = $tax->percentage;
+            foreach($request->tax as $t){
+                $tax_db = Tax::find($t);
+                $tax = $tax + $tax_db->percentage;
+            }
+            // dd($tax);
+            // $tax = Tax::find($request->tax);
+            // $tax_value = $tax->percentage;
             $a = (int)$request->amount;
-            $a = ($a/100) * $tax_value; 
+            $a = ($a/100) * $tax; 
             $amount = $request->amount - $a;
 
         }
@@ -74,13 +93,13 @@ class VouchersController extends Controller
             "beneficiary" => $request->beneficiary,
             "amount" => $amount,
             "description" => $request->description,
-            "tax" => $request->tax,
+            "tax" => $tax,
             "budget" => $request->budget
         ];
 
         if ($prevPayment) {
             if (array_key_exists($arrayToInsert['beneficiary'], $prevPayment->payments)) {
-                return redirect('/create_voucher')->with(['errors' => "Beneficiary already exists in the voucher List!"]);
+                return redirect('/create_voucher')->with(['errors' => "[Beneficiary already exists in the voucher List!]"]);
             }
             $totalAmount = $prevPayment->totalAmount + $amount;
         }else{
@@ -122,6 +141,8 @@ class VouchersController extends Controller
         return redirect('/create_voucher')->with(['errors' => "Payment is added to cache memory!"]);
     }
 
+
+
     public function delete_payment_from_local(Request $request, $id)
     {
 
@@ -139,7 +160,7 @@ class VouchersController extends Controller
         // $request->session()->put("payments", $newPayment);
         Cache::put('payments', $newPayment, 2592000);
 
-        return redirect('/create_voucher')->with(['messages' => "One Payment is removed from cache!"]);
+        return Redirect::to('/create_voucher')->with(['messages' => "One Payment is removed from cache!"]);
     }
 
     public function create_voucher_and_payments(Request $request)
@@ -173,7 +194,7 @@ class VouchersController extends Controller
             }
 
             foreach ($payments->payments as $payment) {
-                $tax_id = (int)$payment['data']['tax'];
+                $tax_percent = $payment['data']['tax'];
                 $beneficiary_id = (int)$payment['data']['beneficiary'];
                 $budget_id = (int)$payment['data']['budget'];
 
@@ -184,14 +205,14 @@ class VouchersController extends Controller
                     'beneficiary_id' => $beneficiary_id,
                     'duedate' => date('d/m/y'),
                     'budget_id' => $budget_id,
-                    'tax_id' => $tax_id,
+                    'tax_percent' => $tax_percent,
                     'approve' => 0,
                 ];
                 //dd($paymentArray);
 
                 $newPayment = Payment::create($paymentArrayy);
 
-                DB::table('payments')->where('id', '=', $newPayment->id)->update(['budget_id'=>$budget_id, 'approve' => 0]);
+                DB::table('payments')->where('id', '=', $newPayment->id)->update(['budget_id'=>$budget_id, 'approve' => 0, 'tax_percent' => $tax_percent,]);
 
             }
 
@@ -232,9 +253,14 @@ class VouchersController extends Controller
     {
         $voucher = Voucher::find($id);
         $payments = DB::table('payments')->where('voucher_id', '=', $id)->get();
-        $is_approved = Payment::where('voucher_id', '=', $id)->first();
+        $is_approve = Payment::where('voucher_id', '=', $id)->first();
+        if ($is_approve) {
+            $is_approved = $is_approve->approve;
+        }else{
+            $is_approved = 0;
+        }
         // dd($is_approved->approve);
 
-        return view('main.voucher.single_voucher')->with(['payments' => $payments, "voucher" => $voucher, "is_approved" => $is_approved->approve]);
+        return view('main.voucher.single_voucher')->with(['payments' => $payments, "voucher" => $voucher, "is_approved" => $is_approved]);
     }
 }
