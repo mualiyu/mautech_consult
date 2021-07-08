@@ -46,7 +46,7 @@ class VouchersController extends Controller
         return view('main.voucher.payment_cache')->with(['payment' => $payment, 'taxes' => $tax, 'beneficiaries' => $beneficiaries, 'budgets' => $budgets]);
     }
 
-
+ 
 
     public function create_payments(Request $request)
     {
