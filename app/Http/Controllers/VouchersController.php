@@ -55,7 +55,7 @@ class VouchersController extends Controller
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'beneficiary' => 'Int',
-            'amount' => 'Int',
+            'amount' => '',
             'description' => 'String',
             'tax' => "nullable",
             'budget' => "Int"

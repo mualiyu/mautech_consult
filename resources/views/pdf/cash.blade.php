@@ -105,6 +105,7 @@
             
             <?php $mandate = Illuminate\Support\Facades\DB::table('mandates')->where('payment_id','=', $payment->id)->get() ?>
             <?php $beneficiary = \App\Beneficiary::find($payment->beneficiary_id) ?>
+            <?php $budget = \App\Budget::find($payment->budget_id) ?>
             <?php array_push($amount_r, $payment->amount); ?>
             <tr>
                 <td style="width:30.9pt; vertical-align:top;">
@@ -135,7 +136,7 @@
                 
                 @foreach ($accounts as $account)
                 <td style="width:50.4pt; vertical-align:top;">
-                    @if ($account == $beneficiary->account)
+                    @if ($account == $budget->account_code)
                             <?php $amount_sa = number_format($payment->amount, 0, '', ',') ?>
                             <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10pt;"><span style="font-family:'Liberation Serif';">{{$amount_sa}}</span></p>
                         @else
@@ -147,7 +148,7 @@
                  @if ($accounts)
                     <?php $amount_sr= []; ?>
                     @foreach ($accounts as $a)
-                        @if ($a == $beneficiary->account)
+                        @if ($a == $budget->account_code)
                             <?php array_push($amount_sr, $payment->amount);?>
                         @endif
                     @endforeach
@@ -198,8 +199,9 @@
             
             @foreach ($accounts as $account)
             <?php $t_amount_s = [];?>
-            <?php $ac_ben = Illuminate\Support\Facades\DB::table('beneficiaries')->where('account','=', $account)->get() ?>
-                <?php $ac_pays = Illuminate\Support\Facades\DB::table('payments')->where('beneficiary_id','=', $ac_ben[0]->id)->get() ?>
+            <?php $ac_ben = Illuminate\Support\Facades\DB::table('budgets')->where('account_code','=', $account)->get() ?>
+            <?php $ac_bn = Illuminate\Support\Facades\DB::table('beneficiaries')->where('account','=', $account)->get() ?>
+                <?php $ac_pays = Illuminate\Support\Facades\DB::table('payments')->where('budget_id','=', $ac_ben[0]->id)->get() ?>
                 @foreach ($ac_pays as $pay)
                     <?php
                         array_push($t_amount_s, $pay->amount);

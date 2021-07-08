@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Mandate;
 use Barryvdh\DomPDF\Facade as PDF;
 use NumberToWords\NumberToWords;
+use App\Budget;
 
 class PdfController extends Controller
 {
@@ -66,8 +67,8 @@ class PdfController extends Controller
 
         $arr = [];
         foreach ($payments as $payment) {
-            $beneficiary = Beneficiary::find($payment->beneficiary_id);
-            $account = $beneficiary->account;
+            $beneficiary = Budget::find($payment->budget_id);
+            $account = $beneficiary->account_code;
 
             array_push($arr, $account);
         }

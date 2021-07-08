@@ -38,7 +38,7 @@
     
 </div><br>
 
-<div style="display: block; text-align:center; margin:0;"">
+<div style="display: block; text-align:center; margin:0;">
     <span style=" left:0%; float:left;">Address: ________________________________&nbsp;</span>
     <span style="right:0%; float:right;"> Cheque No: ____________________</span>
 </div><br>
@@ -46,7 +46,7 @@
 <div style="display: block; text-align:center; margin:0;"">
     <span style="left:0%; float:left;">________________________________&nbsp;</span>
     <span style="left:0%; float:right;"> S.R.V/L.P.O No ________________</span>
-</div><br><br>
+</div><br>
 
 
 <table style="width: 98%; height:; margin-left: 10px; border: solid black;" cellspacing="1">
