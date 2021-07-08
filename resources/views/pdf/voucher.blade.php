@@ -27,7 +27,7 @@
                     {{$beneficiary[0]->name}}, 
                 @endforeach
             @else
-                @for($i=0; $i<3; $i++)
+                @for($i=0; $i<1; $i++)
                     <?php $beneficiary = Illuminate\Support\Facades\DB::table('beneficiaries')->where('id','=', $payments[$i]->beneficiary_id)->get(); ?>
                  {{$beneficiary[0]->name}}, 
                 @endfor
@@ -35,7 +35,7 @@
             @endif
         </span> </span>
         <span style="right:0%; float:right;">Debit: <span style="text-decoration:underline;">
-           {{$budget->description}}________&nbsp;
+           {{$budget->description}}&nbsp;
         </span></span>
     
 </div><br>
