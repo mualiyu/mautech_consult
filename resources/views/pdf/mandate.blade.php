@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
 	<title>Mandate-{{$mandateno}}</title>
-	{{-- <link rel="stylesheet" href="{{asset('css/styles.css')}}"> --}}
+	<link rel="stylesheet" href="{{asset('css/styles.css')}}">
 	<style type="text/css">
     body{
         text-align: center;

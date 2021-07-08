@@ -4,7 +4,7 @@
 	<meta http-equiv="content-type" content="text/html;"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>CashBook-(<?= Date('d/m/20y') ?>)</title>
-	{{-- <link rel="stylesheet" href="{{asset('css/styles.css')}}"> --}}
+	<link rel="stylesheet" href="{{asset('css/styles.css')}}">
 	<style type="text/css">
     html{
         width: 100%;

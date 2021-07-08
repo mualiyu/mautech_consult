@@ -8,7 +8,7 @@
 </head>
  <body>
      <h2 style="text-align: center; margin:;">
-        {{-- <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}"> --}}
+        <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}">
     </h2>
 <h2 style="text-align: center; margin:5px;">
 <strong>MAU CONSULTANCY SERVICES</strong></h2>
