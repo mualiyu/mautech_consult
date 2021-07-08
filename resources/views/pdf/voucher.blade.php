@@ -8,7 +8,7 @@
 </head>
  <body>
      <h2 style="text-align: center; margin:;">
-        <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}">
+        {{-- <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}"> --}}
     </h2>
 <h2 style="text-align: center; margin:5px;">
 <strong>MAU CONSULTANCY SERVICES</strong></h2>
@@ -21,7 +21,7 @@
     <?php $i=0; $payNo = $payments->count(); ?>
 <div style="display: block; text-align:center; margin:0;">
         <span style="left:0%; float:left;">Payee: <span style="text-decoration: underline">
-            @if ($payments->count() <= 3)
+            @if ($payments->count() <= 1)
                 @foreach ($payments as $payment)
                     <?php $beneficiary = Illuminate\Support\Facades\DB::table('beneficiaries')->where('id','=', $payment->beneficiary_id)->get(); ?>
                     {{$beneficiary[0]->name}}, 
@@ -34,7 +34,9 @@
                     And Others
             @endif
         </span> </span>
-        <span style="right:0%; float:right;">Debit: <span style="text-decoration:;">________________________&nbsp;</span></span>
+        <span style="right:0%; float:right;">Debit: <span style="text-decoration:underline;">
+           {{$budget->description}}________&nbsp;
+        </span></span>
     
 </div><br>
 
@@ -45,7 +47,7 @@
 
 <div style="display: block; text-align:center; margin:0;"">
     <span style="left:0%; float:left;">________________________________&nbsp;</span>
-    <span style="left:0%; float:right;"> S.R.V/L.P.O No ________________</span>
+    <span style="left:0%; float:right;"> S.R.V/L.P.O No <span style="text-decoration: underline;">{{$mandate->mandateno ?? "no mandate"}}</span></span>
 </div><br>
 
 

@@ -2,33 +2,39 @@
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
-	<title>Untitled Spreadsheet</title>
+	<title>Mandate-{{$mandateno}}</title>
 	{{-- <link rel="stylesheet" href="{{asset('css/styles.css')}}"> --}}
 	<style type="text/css">
     body{
         text-align: center;
         margin: 20px;
     }
+    @page
+    {
+        size: auto; /* auto is the initial value */
+        margin: 2mm 4mm 0mm 0mm; /* this affects the margin in the printer settings */
+    }
+    thead
+    {
+        display: table-header-group;
+    }
 		
-		td{
-            border: 1px solid black;
-        }
+    td{
+        border: 0.5px solid black;
+    }
 	</style>
 </head>
 <body>
+    <h2 style="text-align: center; margin:;">
+        {{-- <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}"> --}}
+    </h2>
+<h2 style="text-align: center; margin:5px;">
+<strong>MODIBBO ADAMA UNIVERSITY, YOLA</strong></h2>
+<h4 style="text-align: center; margin:5px;"><strong>CONSULTANCY SERVICES UNIT</strong></h4>
+
     <div class="container">
 <table cellpadding="0" cellspacing="0" style="width:; border-collapse:collapse;">
     <tbody>
-        <tr style="height:26.8pt;">
-            <td colspan="9" style="width:726.45pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:15pt;"><span style="font-family:'Liberation Serif';">MODIBBO ADAMA UNIVERSITY, YOLA</span></p>
-            </td>
-        </tr>
-        <tr style="height:22.6pt;">
-            <td colspan="9" style="width:726.45pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><span style="font-family:'Liberation Serif';">CONSULTANCY SERVICE UNIT</span></p>
-            </td>
-        </tr>
         <tr style="height:22.6pt;">
             <td style="width:82.9pt; vertical-align:top;">
                 <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
@@ -56,93 +62,6 @@
             </td>
             <td style="width:126.15pt; vertical-align:top;">
                 <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;{{$mandateno}}</span></p>
-            </td>
-        </tr>
-        <tr style="height:22.6pt;">
-            <td style="width:82.9pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:103.8pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">FGN</span></p>
-            </td>
-            <td style="width:58.6pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:81.2pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:72pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:85.4pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:44.4pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:72pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:126.15pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-        </tr>
-        <tr style="height:17.6pt;">
-            <td style="width:82.9pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">Dear sir</span></p>
-            </td>
-            <td style="width:103.8pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:58.6pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:81.2pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:72pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:85.4pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:44.4pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:72pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:126.15pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-        </tr>
-        <tr style="height:18pt;">
-            <td style="width:82.9pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:103.8pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:58.6pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:81.2pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:72pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:85.4pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:44.4pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:72pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:126.15pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
             </td>
         </tr>
         <tr style="height:21.75pt;">
@@ -217,6 +136,7 @@
                 <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
             </td>
         </tr>
+        <thead>
         <tr style="height:17.95pt;">
             <td style="width:82.9pt; vertical-align:top;">
                 <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10pt;"><span style="font-family:'Liberation Serif';">TARNS. REF.</span></p>
@@ -246,7 +166,7 @@
                 <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10pt;"><span style="font-family:'Liberation Serif';">PURPOSE</span></p>
             </td>
         </tr>
-
+        </thead>
 
 
         <!--   JVCJ -->
@@ -310,93 +230,6 @@
             ?>
             <td style="width:58.6pt; vertical-align:top;">
                 <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;N{{number_format($amount)}}</span></p>
-            </td>
-            <td style="width:81.2pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:72pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:85.4pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:44.4pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:72pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:126.15pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-        </tr>
-        <tr>
-            <td style="width:82.9pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:103.8pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:58.6pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:81.2pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:72pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:85.4pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:44.4pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:72pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:126.15pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-        </tr>
-        <tr>
-            <td style="width:82.9pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:103.8pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:58.6pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:81.2pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:72pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:85.4pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:44.4pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:72pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:126.15pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-        </tr>
-        <tr>
-            <td style="width:82.9pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:103.8pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
-            </td>
-            <td style="width:58.6pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>
             </td>
             <td style="width:81.2pt; vertical-align:top;">
                 <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>

@@ -25,7 +25,10 @@ class PdfController extends Controller
         // dd($voucher[0]->pvno);
 
         $payments = DB::table('payments')->where('voucher_id', '=', $voucher[0]->id)->get();
-        
+        $pay = Payment::where('voucher_id', '=', $voucher[0]->id)->first();
+        $budget = Budget::find($pay->budget_id);
+        $mandate = Mandate::where('voucher_id', '=', $voucher[0]->id)->first();
+
         //convertion to word
         $numberToWords = new NumberToWords();
         $numberTransformer = $numberToWords->getNumberTransformer('en');
@@ -36,7 +39,7 @@ class PdfController extends Controller
 
         // return view('pdf.voucher')->with(['voucher' => $voucher, 'payments' => $payments, 'amountInWords' => $amountInWords]);
 
-        $pdf = PDF::loadView('pdf.voucher', compact('voucher', 'payments', 'amountInWords'))->setPaper('a4');
+        $pdf = PDF::loadView('pdf.voucher', compact('voucher', 'payments', 'amountInWords', 'budget', 'mandate'))->setPaper('a4');
 
         return $pdf->stream('voucher_' . $voucher[0]->pvno . '.pdf');
     }
@@ -67,8 +70,8 @@ class PdfController extends Controller
 
         $arr = [];
         foreach ($payments as $payment) {
-            $beneficiary = Budget::find($payment->budget_id);
-            $account = $beneficiary->account_code;
+            $budgets = Budget::find($payment->budget_id);
+            $account = $budgets->account_code;
 
             array_push($arr, $account);
         }
@@ -77,7 +80,7 @@ class PdfController extends Controller
 
         $pdf = PDF::loadView('pdf.cash', compact('payments', 'accounts'))->setPaper('a4', 'landscape');
 
-        // return view('pdf.cash', compact('payments'))->with(['accounts'=>$accounts]);
+        // return view('pdf.cash', compact('payments'))->with(['accounts' => $accounts]);
 
         return $pdf->stream('cashbook.pdf');
     }
@@ -99,8 +102,8 @@ class PdfController extends Controller
 
         $arr = [];
         foreach ($payments as $payment) {
-            $beneficiary = Beneficiary::find($payment->beneficiary_id);
-            $account = $beneficiary->account;
+            $budgets = Budget::find($payment->budget_id);
+            $account = $budgets->account_code;
 
             array_push($arr, $account);
         }
@@ -116,6 +119,4 @@ class PdfController extends Controller
             return redirect('payments')->with(['errors' => "Date not found!"]);
         }
     }
-
-
 }
