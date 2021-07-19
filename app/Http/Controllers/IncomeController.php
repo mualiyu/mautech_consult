@@ -83,4 +83,14 @@ class IncomeController extends Controller
 
         return redirect('/incomes')->with(['errors' => "Income uploaded Successful"]);
     }
+
+    public function download_sample()
+    {
+        $filePath = public_path("sam/sample_income.csv");
+        // dd($filePath);
+        $headers = ['Content-Type: text/csv'];
+        $fileName = 'sample_' . time() . '.csv';
+
+        return response()->download($filePath, $fileName, $headers);
+    }
 }

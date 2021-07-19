@@ -68,6 +68,7 @@ Route::get('/incomes', [IncomeController::class, "index"])->name('incomes');
 Route::get('/add_income', [IncomeController::class, "show_add_income"])->name('show_add_income');
 Route::post('/create_income', [IncomeController::class, "create_income"])->name('create_income');
 Route::post('/upload_income_csv', [IncomeController::class, "importIncome"])->name('upload_income_csv');
+Route::get('/download_sample_income_sheet', [IncomeController::class, "download_sample"])->name("download_income_sample");
 
 
 Route::get('/mandates', [MandateController::class, "index"])->name('mandates');

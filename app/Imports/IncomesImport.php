@@ -20,13 +20,13 @@ class IncomesImport implements ToModel, WithHeadingRow
         $day = '20' . $ex1[2] . '-' . $ex1[1] . '-' . $ex1[0];
         $time = $ex[1] . ':00';
         $date = $day . " " . $time;
-        // dd($date);
+        // dd($row['amount']);
 
         return new Income([
 
             "payer" => $row['payer'],
             "ref_num" => $row['ref'],
-            "amount" => $row['amount'],
+            "amount" => $row['amount'] * 100,
             "type" => $row['purpose'],
             "create_at" => $date,
         ]);
