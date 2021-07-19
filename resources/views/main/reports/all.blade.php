@@ -64,9 +64,9 @@
                             @foreach ($budget_reports as $b)    
                             <tr>
                                 <td>{{$b[0]}}</td>
-                                <td>NGN{{number_format($b[1])}}</td>
-                                <td>NGN{{number_format($b[2])}}</td>
-                                <td>NGN{{number_format($b[3])}}</td>
+                                <td>NGN{{number_format($b[1]/100, 2)}}</td>
+                                <td>NGN{{number_format($b[2]/100, 2)}}</td>
+                                <td>NGN{{number_format($b[3]/100, 2)}}</td>
                             </tr>
                             @endforeach
                         </tbody>

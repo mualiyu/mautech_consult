@@ -68,7 +68,7 @@
                                                             <hr>
                                                             <li style="margin-left: 6px;"><a href="{{route('show_single_mandate', ['id'=>$man_no[2].'-'.$man_no[3]])}}" class="btn btn-success"><i class="fas fa-edit"></i> Open Mandate</a></li>
                                                 </td>
-                                                <td>NGN {{number_format($amount)}}</td>
+                                                <td>NGN {{number_format($amount/100, 2)}}</td>
                                             </tr>
                                             @endforeach
                                             

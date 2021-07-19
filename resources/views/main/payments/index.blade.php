@@ -84,7 +84,7 @@
                                                               </li>
                                                         </ul>
                                                 </td>
-                                                <td>NGN {{number_format($payment->amount)}}</td>
+                                                <td>NGN {{number_format($payment->amount/100, 2)}}</td>
                                                 <td>{{$payment->description}}</td>
                                                 <td>{{$voucher->pvno}}</td>
                                                 <td>{{$payment->tax_percent ?? '0'}}%</td>

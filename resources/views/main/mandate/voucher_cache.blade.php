@@ -46,8 +46,8 @@
                                             </tr>
                                         </thead>
                                         
-					<tbody>
-					@if($mandates['voucher'])
+					                <tbody>
+					                @if($mandates['voucher'])
                                         @foreach ($mandates["voucher"] as $id)
                                         <?php $voucher = Illuminate\Support\Facades\DB::table('vouchers')->where('id','=', (int)$id)->get();?>
                                         <?php $payments = Illuminate\Support\Facades\DB::table('payments')->where('voucher_id','=', (int)$id)->get(); ?>
@@ -56,17 +56,16 @@
                                             <tr>
                                                 <td>
                                                     <a href="javascript:;" class="dropdown-toggle">{{$voucher[0]->pvno}}</a>
-
                                                 </td>
                                                 <td>{{$beneficiary[0]->name}}</td>
                                                 <td>{{$payment->duedate}}</td>
                                                 <td>{{$beneficiary[0]->account}}</td>
                                                 <td>{{$payment->description}}</td>
-                                                <td>NGN {{number_format($payment->amount)}}</td>
+                                                <td>NGN {{number_format($payment->amount/100, 2)}}</td>
                                             </tr>
                                             @endforeach    
-					    @endforeach
-					    @endif
+					                    @endforeach
+				                    @endif
                                             
                                         </tbody>
                                     </table>

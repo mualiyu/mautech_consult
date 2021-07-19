@@ -8,7 +8,7 @@
 </head>
  <body>
      <h2 style="text-align: center; margin:0px auto;">
-        <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}">
+        {{-- <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}"> --}}
     </h2>
 <h2 style="text-align: center; margin:5px;">
 <strong>MAU CONSULTANCY SERVICES</strong></h2>
@@ -35,7 +35,7 @@
             @endif
         </span> </span>
         <span style="right:0%; float:right;">Debit: <span style="text-decoration:underline;">
-           {{$budget->description}}&nbsp;
+           {{$budget->description ?? ''}}&nbsp;
         </span></span>
     
 </div><br>
@@ -90,8 +90,8 @@
 <table style="height: ; width: 100%;">
 <tbody>
 <tr style="width:;">
-<td style="width: 65%;  border: 0px solid black;">&nbsp; {{number_format($payment->amount)}}</td>
-<td style="width: 35%; border: 0px solid black;">&nbsp; .00</td>
+<td style="width: 65%;  border: 0px solid black;">&nbsp; {{number_format($payment->amount/100, 2)}}</td>
+<td style="width: 35%; border: 0px solid black;">&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -103,10 +103,10 @@
 <tr style="text-align: left; height: ;">
 <td style="width: 80%; height:;" colspan="2">&nbsp; Total amount in words: 
     <span style="text-decoration:; text-transform: uppercase;" id="t_amount"><small> {{$amountInWords}}</small> </span>
-    <input type="hidden" value="{{$voucher[0]->totalamount}}" name="" id="num">
+    <input type="hidden" value="{{$voucher[0]->totalamount/100}}" name="" id="num">
 </td>
 <td style="width: 20%; height: ;">
-&nbsp;&nbsp;&nbsp;<span style="font-size: 20px"><small>NGN <span id="t_amount_c">{{number_format($voucher[0]->totalamount)}}</span></small></span> 
+&nbsp;&nbsp;&nbsp;<span style="font-size: 20px"><small>NGN <span id="t_amount_c">{{number_format($voucher[0]->totalamount/100, 2)}}</span></small></span> 
 </td>
 </tr>
 </tbody>

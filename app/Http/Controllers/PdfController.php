@@ -32,7 +32,7 @@ class PdfController extends Controller
         //convertion to word
         $numberToWords = new NumberToWords();
         $numberTransformer = $numberToWords->getNumberTransformer('en');
-        $amountInWords = $numberTransformer->toWords((int)$voucher[0]->totalamount);
+        $amountInWords = $numberTransformer->toWords((int)$voucher[0]->totalamount / 100);
 
         // $amountInWords = $this->numberTowords((int)$voucher[0]->totalamount);
         // dd($amountInWords);
@@ -70,10 +70,12 @@ class PdfController extends Controller
 
         $arr = [];
         foreach ($payments as $payment) {
-            $budgets = Budget::find($payment->budget_id);
-            $account = $budgets->account_code;
+            if ($payment->budget_id != 0) {
+                $budgets = Budget::find($payment->budget_id);
+                $account = $budgets->account_code;
 
-            array_push($arr, $account);
+                array_push($arr, $account);
+            }
         }
         $accounts = array_unique($arr);
 

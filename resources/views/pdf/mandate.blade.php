@@ -26,7 +26,7 @@
 </head>
 <body>
     <h2 style="text-align: center; margin:;">
-        <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}">
+        {{-- <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}"> --}}
     </h2>
 <h2 style="text-align: center; margin:5px;">
 <strong>MODIBBO ADAMA UNIVERSITY, YOLA</strong></h2>
@@ -186,7 +186,7 @@
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span>{{$beneficiary[0]->name}}</p>
                 </td>
                 <td style="width:45.6pt; vertical-align:top;">
-                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span>N{{number_format($payment->amount)}}</p>
+                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span>N{{number_format($payment->amount/100, 2)}}</p>
                 </td>
                 <td style="width:80.2pt; vertical-align:top;">
                     <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
@@ -229,7 +229,7 @@
 
             ?>
             <td style="width:58.6pt; vertical-align:top;">
-                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;N{{number_format($amount)}}</span></p>
+                <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;N{{number_format($amount/100 ,2)}}</span></p>
             </td>
             <td style="width:81.2pt; vertical-align:top;">
                 <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span></p>

@@ -81,7 +81,7 @@
                                                               </li>
                                                         </ul>
                                                 </td>
-                                                <td >NGN<span id="amount"> {{number_format($voucher->totalamount)}}</span></td>
+                                                <td >NGN<span id="amount"> {{number_format($voucher->totalamount/100, 2)}}</span></td>
                                                  <?php $due = explode(' ', $voucher->created_at); $date = explode('-', $due[0]); $vou_date = $date[0].'/'.$date[1].'/'.$date[2]; ?>
                                                 <td>{{$vou_date}}</td>
                                                 @if(Auth::user()->isDirector())

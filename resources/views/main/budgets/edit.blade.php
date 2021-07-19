@@ -44,7 +44,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small mb-1" for="amount">Amount</label>
-                                    <input name="amount" value="{{$budget->amount}}" class="form-control py-4" id="amount" type="text" placeholder="Enter Amount" />
+                                    <input name="amount" value="{{$budget->amount/100}}" class="form-control py-4" id="amount" type="text" placeholder="Enter Amount" />
                                 </div>
                             </div>
                         </div>

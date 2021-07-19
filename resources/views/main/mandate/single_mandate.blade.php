@@ -63,7 +63,7 @@
                                                     </a>
                                                         
                                                 </td>
-                                                <td>NGN {{number_format($payment->amount)}}</td>
+                                                <td>NGN {{number_format($payment->amount/100, 2)}}</td>
                                                 <?php $due = explode(' ', $payment->duedate); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
                                                 <td>{{$duedate}}</td>
                                                 <td>{{$beneficiary[0]->code}}</td>

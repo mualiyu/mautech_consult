@@ -38,15 +38,24 @@ class VouchersController extends Controller
         // Cache::forget("payments");
         $payment = Cache::get("payments");
         // dd($payment);
-        $beneficiaries = Beneficiary::all();
+        // $beneficiaries = Beneficiary::all();
+        $benTax = Beneficiary::where('tag', '=', "tax")->get();
+        $beneficiaries = Beneficiary::where('tag', '!=', "tax")->get();
         $tax = Tax::all();
         $budgets = Budget::all();
 
 
-        return view('main.voucher.payment_cache')->with(['payment' => $payment, 'taxes' => $tax, 'beneficiaries' => $beneficiaries, 'budgets' => $budgets]);
+        return view('main.voucher.payment_cache')
+            ->with([
+                'payment' => $payment,
+                'taxes' => $tax,
+                'beneficiaries' => $beneficiaries,
+                'benTax' => $benTax,
+                'budgets' => $budgets,
+            ]);
     }
 
- 
+
 
     public function create_payments(Request $request)
     {
@@ -58,43 +67,48 @@ class VouchersController extends Controller
             'amount' => '',
             'description' => 'String',
             'tax' => "nullable",
-            'budget' => "Int"
+            'budget' => "Int",
+            'benTax' => 'nullable',
         ]);
 
         if ($validator->fails()) {
             return redirect('/create_voucher')
-            ->withErrors($validator)
-            ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
 
         $tax = 0;
 
-        if(!$request->tax){
+        if (!$request->tax) {
             $amount = $request->amount;
-        }else{
-            foreach($request->tax as $t){
+        } else {
+            foreach ($request->tax as $t) {
                 $tax_db = Tax::find($t);
                 $tax = $tax + $tax_db->percentage;
             }
             // dd($tax);
             // $tax = Tax::find($request->tax);
             // $tax_value = $tax->percentage;
-            $a = (int)$request->amount;
-            $a = ($a/100) * $tax; 
+            $a = $request->amount;
+            $a = ($a / 100) * $tax;
             $amount = $request->amount - $a;
-
+            $tax_amount = $a;
         }
-        // dd($amount);
+        // dd($tax_amount);
 
         $cart = new PaymentCart($prevPayment);
 
         $arrayToInsert = [
             "beneficiary" => $request->beneficiary,
             "amount" => $amount,
+            "r_amount" => $request->amount,
             "description" => $request->description,
-            "tax" => $tax,
-            "budget" => $request->budget
+            "tax" => $request->tax,
+            "tax_p" => $tax,
+            "budget" => $request->budget,
+            "tax_amount" => $tax_amount,
+            "ben_tax" => $request->benTax,
         ];
 
         if ($prevPayment) {
@@ -102,11 +116,13 @@ class VouchersController extends Controller
                 return redirect('/create_voucher')->with(['errors' => "[Beneficiary already exists in the voucher List!]"]);
             }
             $totalAmount = $prevPayment->totalAmount + $amount;
-        }else{
+            $total_tax_amount = $prevPayment->total_tax_amount + $tax_amount;
+        } else {
             $totalAmount = $amount;
+            $total_tax_amount = $tax_amount;
         }
 
-        if($request->budget){
+        if ($request->budget) {
             //checking amount in payments table
             $payments = Payment::where('budget_id', '=', $request->budget)->get();
             $amount_r = [];
@@ -114,18 +130,18 @@ class VouchersController extends Controller
                 // $amount_p = $amount_p + $p->amount; 
                 array_push($amount_r, $p->amount);
             }
-            $amount_p = 0; 
-            for ($i=0; $i < count($amount_r); $i++) { 
+            $amount_p = 0;
+            for ($i = 0; $i < count($amount_r); $i++) {
                 $amount_p = $amount_p + $amount_r[$i];
             }
 
-            $t_Amount = $totalAmount+$amount_p;
+            $t_Amount = $totalAmount + $amount_p;
 
             $budget = Budget::find($request->budget);
             if ($t_Amount > $budget->amount) {
                 return redirect('/create_voucher')->with(['errors' => " Sorry you have reached your maximum Budget For this year. Please Increase your budget to get this done!"]);
             }
-        }else{
+        } else {
             return redirect('/create_voucher')->with(['errors' => " Sorry Budget not found. Make sure you have Added budget to the system!"]);
         }
 
@@ -180,8 +196,22 @@ class VouchersController extends Controller
 
                 $newVoucher = Voucher::create([
                     'pvno' => $pvno,
-                    'totalamount' => $payments->totalAmount,
+                    'totalamount' => $payments->totalAmount * 100,
                 ]);
+
+                if ($payments->total_tax_amount != 0) {
+                    # code...
+                    $tax_totalamount = $payments->total_tax_amount;
+
+                    $tax_ex = $ex + 1;
+                    $tax_split = str_split($tax_ex, 4);
+                    $tax_pvno = $tax_split[0] . '/' . $tax_split[1];
+
+                    $new_tax_voucher = Voucher::create([
+                        'pvno' => $tax_pvno,
+                        'totalamount' => $tax_totalamount * 100,
+                    ]);
+                }
             } else {
                 $year = 20. . date('y');
                 $no = '/0001';
@@ -189,17 +219,32 @@ class VouchersController extends Controller
 
                 $newVoucher = Voucher::create([
                     'pvno' => $pvno,
-                    'totalamount' => $payments->totalAmount,
+                    'totalamount' => $payments->totalAmount * 100,
                 ]);
+
+                if ($payments->total_tax_amount != 0) {
+                    # code...
+                    $tax_totalamount = $payments->total_tax_amount;
+
+                    // dd()
+                    $tax_ex = (int) str_replace('/', '', $pvno) + 1;
+                    $tax_split = str_split($tax_ex, 4);
+                    $tax_pvno = $tax_split[0] . '/' . $tax_split[1];
+
+                    $new_tax_voucher = Voucher::create([
+                        'pvno' => $tax_pvno,
+                        'totalamount' => $tax_totalamount * 100,
+                    ]);
+                }
             }
 
             foreach ($payments->payments as $payment) {
-                $tax_percent = $payment['data']['tax'];
+                $tax_percent = $payment['data']['tax_p'];
                 $beneficiary_id = (int)$payment['data']['beneficiary'];
                 $budget_id = (int)$payment['data']['budget'];
 
                 $paymentArrayy = [
-                    'amount' => $payment['data']['amount'],
+                    'amount' => $payment['data']['amount'] * 100,
                     'description' => $payment['data']['description'],
                     'voucher_id' => $newVoucher->id,
                     'beneficiary_id' => $beneficiary_id,
@@ -212,8 +257,44 @@ class VouchersController extends Controller
 
                 $newPayment = Payment::create($paymentArrayy);
 
-                DB::table('payments')->where('id', '=', $newPayment->id)->update(['budget_id'=>$budget_id, 'approve' => 0, 'tax_percent' => $tax_percent,]);
+                DB::table('payments')->where('id', '=', $newPayment->id)->update(['budget_id' => $budget_id, 'approve' => 0, 'tax_percent' => $tax_percent,]);
 
+
+                if (count($payment['data']['tax']) > 0) {
+                    # code...
+                    $taxes = $payment['data']['tax'];
+
+                    foreach ($taxes as $tax) {
+                        $tax_db_b = Tax::find((int)$tax);
+                        $ben_t = Beneficiary::find((int)$payment['data']['ben_tax'][(int)$tax]);
+
+                        $r_a = $payment['data']['r_amount'];
+                        $r_a = ($r_a / 100) * $tax_db_b->percentage;
+
+                        $tax_amount = $r_a * 100;
+                        $ben_id = (int)$payment['data']['ben_tax'][(int)$tax];
+                        $taxPaymentArray = [
+                            'amount' => $tax_amount,
+                            'description' => 'Tax',
+                            'voucher_id' => $new_tax_voucher->id,
+                            'beneficiary_id' => $ben_id,
+                            'duedate' => date('d/m/y'),
+                            'budget_id' => 0,
+                            'tax_percent' => 0,
+                            'approve' => 0,
+                        ];
+
+                        $new_tax_payment = Payment::create($taxPaymentArray);
+
+                        DB::table('payments')
+                            ->where('id', '=', $new_tax_payment->id)
+                            ->update([
+                                'budget_id' => 0,
+                                'approve' => 0,
+                                'tax_percent' => 0,
+                            ]);
+                    }
+                }
             }
 
             Cache::forget('payments');
@@ -241,8 +322,8 @@ class VouchersController extends Controller
             foreach ($mandates as $mandate) {
                 DB::table('mandates')->delete($mandate->id);
             }
-	}
-	Cache::forget("mandates");
+        }
+        Cache::forget("mandates");
 
         DB::table('vouchers')->delete($id);
 
@@ -256,7 +337,7 @@ class VouchersController extends Controller
         $is_approve = Payment::where('voucher_id', '=', $id)->first();
         if ($is_approve) {
             $is_approved = $is_approve->approve;
-        }else{
+        } else {
             $is_approved = 0;
         }
         // dd($is_approved->approve);

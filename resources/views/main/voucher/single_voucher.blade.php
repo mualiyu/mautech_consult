@@ -74,7 +74,7 @@
                                                               </li>
                                                         </ul>
                                                 </td>
-                                                <td>NGN <span id="amount[<?= $i; ?>]">{{number_format($payment->amount)}}</span></td>
+                                                <td>NGN <span id="amount[<?= $i; ?>]">{{number_format($payment->amount/100, 2)}}</span></td>
                                                 <td>{{$payment->description}}</td>
                                                 <td>{{$voucher->pvno}}</td>
                                                 <td>{{$payment->tax_percent ?? '0'}}%</td>

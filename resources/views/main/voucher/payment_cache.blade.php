@@ -66,9 +66,9 @@
                                                               </li>
                                                         </ul>
                                                 </td>
-                                                <td>NGN {{number_format($payment['data']['amount'])}}</td>
+                                                <td>NGN {{number_format($payment['data']['amount'], 2)}}</td>
                                                 <td>{{$payment['data']['description']}}</td>
-                                                <td>{{$payment['data']['tax'] ?? '0'}}%</td>
+                                                <td>{{$payment['data']['tax_p'] ?? '0'}}%</td>
                                                 <td>{{$budget->description}}</td>
                                                 
                                             </tr>
@@ -148,12 +148,26 @@
                                             <div class="form-group">
                                                 <label class=" mb-1" for="tax">Tax (Optional)</label>
                                                 @foreach ($taxes as $tax)
-                                                <div class="form-check">
-                                                    <input class="form-check-input" name="tax[]" type="checkbox" value="{{$tax->id}}" id="id_{{$tax->id}}">
-                                                    <label class="form-check-label" for="id_{{$tax->id}}">
-                                                        {{$tax->type}}<small>({{$tax->percentage}}%)</small>
-                                                    </label>
-                                                </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" name="tax[]" onchange="$('#nn_{{$tax->id}}').toggle()" type="checkbox" value="{{$tax->id}}" id="id_{{$tax->id}}">
+                                                            <label class="form-check-label" style="font-size: 18px" for="id_{{$tax->id}}">
+                                                            {{$tax->type}}<small>({{$tax->percentage}}%)</small>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-group" id="nn_{{$tax->id}}" style="display: none; background:#d7d7d7;">
+                                                            <label class=" mb-1" for="benTax"><small>Select Tax Beneficiary</small></label>
+                                                            <select name="benTax[{{$tax->id}}]" class="input-group" id="benTax" placeholder="Select" >
+                                                                {{-- <option value=''>None</option>
+                                                                <hr> --}}
+                                                                @foreach ($benTax as $ben)
+                                                                <option value="{{$ben->id}}">{{$ben->name}}</option>
+                                                                @endforeach
+                                                                @if (!count($benTax) > 0)
+                                                                <option>No data <small>(make sure you add a Tax beneficiary)</small></option>
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                        
                                                 @endforeach
                                             </div>
 

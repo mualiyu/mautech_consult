@@ -35,7 +35,7 @@
 </head>
 <body>
     <h2 style="text-align: center; margin:;">
-        <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}">
+        {{-- <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}"> --}}
     </h2>
 <h2 style="text-align: center; margin:5px;">
 <strong>MODIBBO ADAMA UNIVERSITY, YOLA</strong></h2>
@@ -117,11 +117,21 @@
                 $amount_r = [];
             ?>
             @foreach ($payments as $payment)
+            {{-- {{$payment->amount}} --}}
             <?php $voucher = \App\Voucher::find($payment->voucher_id) ?>
             
             <?php $mandate = Illuminate\Support\Facades\DB::table('mandates')->where('payment_id','=', $payment->id)->get() ?>
             <?php $beneficiary = \App\Beneficiary::find($payment->beneficiary_id) ?>
-            <?php $budget = \App\Budget::find($payment->budget_id) ?>
+
+            <?php
+            if ($payment->budget_id != 0) {   
+                $budget = \App\Budget::find($payment->budget_id, ['account_code']);
+                $acc = $budget->account_code;
+            }else{
+                $acc = 0;
+            }
+            ?>
+            {{-- // Illuminate\Support\Facades\DB::table('budgets')->where('id','=', $payment->buget_id)->get(); --}}
             <?php array_push($amount_r, $payment->amount); ?>
             <tr>
                 <td style="width:30.9pt; vertical-align:top;">
@@ -146,14 +156,19 @@
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span>{{$pvno}}</p>
                 </td>
                 <td style="width:40.4pt; vertical-align:top; text-align:right; padding-right:4px;">
-                   <?php  $amount_ss = number_format($payment->amount, 0, '', ',') ?>
+                   <?php  $amount_ss = number_format($payment->amount/100, 2) ?>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span>{{$amount_ss}}</p>
                 </td>
-                
+                    {{-- <?php 
+                        $b_acc = 0;
+                        foreach($budget as $b){
+                            $b_acc = $b_acc + $b->account_code;
+                        }
+                    ?> --}}
                 @foreach ($accounts as $account)
                 <td style="width:35.4pt; vertical-align:top;">
-                    @if ($account == $budget->account_code)
-                            <?php $amount_sa = number_format($payment->amount, 0, '', ',') ?>
+                        @if ($account == $acc)
+                            <?php $amount_sa = number_format($payment->amount/100, 2); ?>
                             <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10pt;"><span style="font-family:'Liberation Serif';">{{$amount_sa}}</span></p>
                         @else
                             <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10pt;"><span style="font-family:'Liberation Serif';"></span></p>
@@ -164,7 +179,7 @@
                  @if ($accounts)
                     <?php $amount_sr= []; ?>
                     @foreach ($accounts as $a)
-                        @if ($a == $budget->account_code)
+                        @if ($a == $acc)
                             <?php array_push($amount_sr, $payment->amount);?>
                         @endif
                     @endforeach
@@ -173,10 +188,10 @@
                         for ($i=0; $i < count($amount_sr); $i++) { 
                             $amount_s = $amount_s + $amount_sr[$i];
                         }
-                        $amount_s = number_format($amount_s, 0, '', ',')
+                        $amount_s = number_format($amount_s/100, 2)
                     ?>
                     <td style="width:35.4pt; vertical-align:top; text-align:right; padding-right:4px;">
-                        <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span>{{$amount_s}}</p>
+                        <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt;"><span style="font-family:'Liberation Serif';">&nbsp;</span>{{$amount_s != 0 ? $amount_s : $payment->amount/100}}</p>
                     </td>
                  @endif
                 
@@ -207,7 +222,7 @@
                 for ($i=0; $i < count($amount_r); $i++) { 
                     $total_amount = $total_amount + $amount_r[$i];
                 }
-                 $format_total_amount = number_format($total_amount, 0, '', ',')
+                 $format_total_amount = number_format($total_amount/100, 2)
             ?>
             <td style="width:30pt; vertical-align:bottom;  text-align:right; padding-right:4px;">
                 <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt;"><span style="font-family:'Liberation Serif';">&nbsp;{{$format_total_amount}}</span></p>
@@ -216,7 +231,7 @@
             @foreach ($accounts as $account)
             <?php $t_amount_s = [];?>
             <?php $ac_ben = Illuminate\Support\Facades\DB::table('budgets')->where('account_code','=', $account)->get() ?>
-            <?php $ac_bn = Illuminate\Support\Facades\DB::table('beneficiaries')->where('account','=', $account)->get() ?>
+            {{-- <?php $ac_bn = Illuminate\Support\Facades\DB::table('beneficiaries')->where('account','=', $account)->get() ?> --}}
                 <?php $ac_pays = Illuminate\Support\Facades\DB::table('payments')->where('budget_id','=', $ac_ben[0]->id)->get() ?>
                 @foreach ($ac_pays as $pay)
                     <?php
@@ -228,7 +243,7 @@
                     for ($i=0; $i < count($t_amount_s); $i++) { 
                         $total_single_a = $total_single_a + $t_amount_s[$i];
                     }
-                    $total_single_a = number_format($total_single_a, 0, '', ',')
+                    $total_single_a = number_format($total_single_a/100, 2)
                 ?>
                 <td style="width:35.4pt; vertical-align:bottom;">
                     <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10pt;"><span style="font-family:'Liberation Serif';">{{$total_single_a}}</span></p>

@@ -63,9 +63,9 @@
                         <tbody>
                             <tr>
                                 <td>{{$single_report[0]}}</td>
-                                <td>NGN {{number_format($single_report[1])}}</td>
-                                <td>NGN {{number_format($single_report[2])}}</td>
-                                <td>NGN {{number_format($single_report[3])}}</td>
+                                <td>NGN {{number_format($single_report[1]/100, 2)}}</td>
+                                <td>NGN {{number_format($single_report[2]/100, 2)}}</td>
+                                <td>NGN {{number_format($single_report[3]/100, 2)}}</td>
                             </tr>
                         </tbody>
                         {{-- <tbody>
