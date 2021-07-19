@@ -98,7 +98,7 @@
                                         <form action="{{route('upload_income_csv')}}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <div class="input-group">
-                                                <input name="file" class="form-control" onchange="Upload()" accept=".csv" id="fileUpload" type="file" placeholder="choose file" />
+                                                <input name="file" class="form-control" required onchange="Upload()" accept=".csv" id="fileUpload" type="file" placeholder="choose file" />
                                                 <div class="input-group-prepend">
                                                   <input name="submit" class="btn btn-success" id="submit" type="submit" aria-describedby="nameHelp" value="Upload" />
                                                 </div>

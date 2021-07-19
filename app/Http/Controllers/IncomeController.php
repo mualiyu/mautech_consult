@@ -69,6 +69,16 @@ class IncomeController extends Controller
 
     public function importIncome(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            "file" => "required",
+
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route("incomes")
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         Excel::import(new IncomesImport, $request->file('file')->store('temp'));
 
         return redirect('/incomes')->with(['errors' => "Income uploaded Successful"]);
