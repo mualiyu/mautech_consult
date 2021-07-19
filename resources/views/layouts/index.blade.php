@@ -11,6 +11,7 @@
         <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+        @yield('style')
     </head>
     <body class="sb-nav-fixed">
         
@@ -93,6 +94,10 @@
                             <a class="nav-link" href="{{ route('payments') }}">
                                 <div class="sb-nav-link-icon">  </div>
                                 Payments
+                            </a>
+                            <a class="nav-link" href="{{ route('incomes') }}">
+                                <div class="sb-nav-link-icon">  </div>
+                                Incomes
                             </a>
                             <a class="nav-link" href="{{ route('budgets') }}">
                                 <div class="sb-nav-link-icon">  </div>

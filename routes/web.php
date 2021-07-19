@@ -12,6 +12,7 @@ use App\Http\Controllers\MandateController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\IncomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,11 +25,11 @@ use App\Http\Controllers\ReportsController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
 //Route::get('/dashboard', function () {
-  //  return view('main.dashboard');
+//  return view('main.dashboard');
 //})->name('dashboard');
 //
 Route::get('/dashboard', [HomeController::class, "index"])->name('dashboard');
@@ -55,9 +56,18 @@ Route::post('/create_payment', [VouchersController::class, "create_payments"])->
 Route::post('/{id}/delete_payment_from_local', [VouchersController::class, "delete_payment_from_local"])->name('delete_payment_from_local');
 Route::post('/create_voucher_and_payments', [VouchersController::class, "create_voucher_and_payments"])->name('create_voucher_and_payments');
 
+
+// Payments
 Route::get('/payments', [PaymentsController::class, "index"])->name('payments');
 Route::post('/update_payment/{id}', [PaymentsController::class, "update_payment"])->name('update_payment');
 Route::post('/{id}/delete_payment', [PaymentsController::class, "delete_payment"])->name('delete_payment');
+
+
+// Incomes
+Route::get('/incomes', [IncomeController::class, "index"])->name('incomes');
+Route::get('/add_income', [IncomeController::class, "show_add_income"])->name('show_add_income');
+Route::post('/create_income', [IncomeController::class, "create_income"])->name('create_income');
+Route::post('/upload_income_csv', [IncomeController::class, "importIncome"])->name('upload_income_csv');
 
 
 Route::get('/mandates', [MandateController::class, "index"])->name('mandates');
