@@ -77,7 +77,7 @@
                                                 <td>{{$income->ref_num}}</td>
 						<td>{{number_format($income->amount/100, 2)}}</td>
 						<td>{{$income->type}}</td>
-                                                <?php $due = explode(' ', $income->created_at); $date = explode('-', $due[0]); $inc_d = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+                                                <?php $due = explode(' ', $income->created_at); $date = explode('-', $due[0]); $inc_d = $date[2].'/'.$date[1].'/'.$date[0]; ?>
                                                 <td>{{$inc_d}}</td>
                                             </tr>
                                             @endforeach

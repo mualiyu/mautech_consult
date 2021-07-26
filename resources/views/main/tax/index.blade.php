@@ -64,7 +64,7 @@
                                                         </ul>
                                                 </td>
                                                 <td>{{$tax->percentage}}</td>
-                                                <?php $due = explode(' ', $tax->created_at); $date = explode('-', $due[0]); $tax_t = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+                                                <?php $due = explode(' ', $tax->created_at); $date = explode('-', $due[0]); $tax_t = $date[2].'/'.$date[1].'/'.$date[0]; ?>
                                                 <td>{{$tax_t}}</td>
                                             </tr>
                                             @endforeach

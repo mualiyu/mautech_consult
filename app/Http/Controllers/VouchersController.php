@@ -77,11 +77,17 @@ class VouchersController extends Controller
                 ->withInput();
         }
 
+        // if (is_array($request->tax) > 0) {
+        //     dd($request->tax);
+        // } else {
+        //     dd($request->tax);
+        // }
 
         $tax = 0;
 
         if (!$request->tax) {
             $amount = $request->amount;
+            $tax_amount = 0;
         } else {
             foreach ($request->tax as $t) {
                 $tax_db = Tax::find($t);
@@ -112,9 +118,9 @@ class VouchersController extends Controller
         ];
 
         if ($prevPayment) {
-            if (array_key_exists($arrayToInsert['beneficiary'], $prevPayment->payments)) {
-                return redirect('/create_voucher')->with(['errors' => "[Beneficiary already exists in the voucher List!]"]);
-            }
+            // if (array_key_exists($arrayToInsert['beneficiary'], $prevPayment->payments)) {
+            //     return redirect('/create_voucher')->with(['errors' => "[Beneficiary already exists in the voucher List!]"]);
+            // }
             $totalAmount = $prevPayment->totalAmount + $amount;
             $total_tax_amount = $prevPayment->total_tax_amount + $tax_amount;
         } else {
@@ -145,13 +151,13 @@ class VouchersController extends Controller
             return redirect('/create_voucher')->with(['errors' => " Sorry Budget not found. Make sure you have Added budget to the system!"]);
         }
 
-        // dd($t_Amount);
 
         $cart->addToPayment($arrayToInsert['beneficiary'], $arrayToInsert);
 
         // $request->session()->put('payments', $cart);
         Cache::put('payments', $cart, 2592000);
 
+        // dd($t_Amount);
         // $payments = Cache::put("payments", $arrayToInsert, "3600");
 
         return redirect('/create_voucher')->with(['errors' => "Payment is added to cache memory!"]);
@@ -260,7 +266,7 @@ class VouchersController extends Controller
                 DB::table('payments')->where('id', '=', $newPayment->id)->update(['budget_id' => $budget_id, 'approve' => 0, 'tax_percent' => $tax_percent,]);
 
 
-                if (count($payment['data']['tax']) > 0) {
+                if (is_array($payment['data']['tax']) > 0) {
                     # code...
                     $taxes = $payment['data']['tax'];
 

@@ -135,7 +135,7 @@
             <?php array_push($amount_r, $payment->amount); ?>
             <tr>
                 <td style="width:30.9pt; vertical-align:top;">
-                    <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+                    <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[2].'/'.$date[1].'/'.$date[0]; ?>
                     <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt;"><span style="font-family:'Liberation Serif';">&nbsp;{{$duedate}}</span></p>
                 </td>
                 <td style="width:50.8pt; vertical-align:top;">

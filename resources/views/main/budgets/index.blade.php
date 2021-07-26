@@ -64,7 +64,7 @@
                                                 </td>
                                                 <td>{{$budget->account_code}}</td>
                                                 <td>NGN {{number_format($budget->amount/100, 2)}}</td>
-                                                <?php $due = explode(' ', $budget->created_at); $date = explode('-', $due[0]); $bud_date = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+                                                <?php $due = explode(' ', $budget->created_at); $date = explode('-', $due[0]); $bud_date = $date[1].'/'.$date[1].'/'.$date[0]; ?>
                                                 <td>{{$bud_date}}</td>
                                             </tr>
                                             @endforeach

@@ -40,7 +40,7 @@ class PaymentCart
             $productToAdd = ["quantity" => 1, "data" => $product];
         }
 
-        $this->payments[$id] = $productToAdd;
+        $this->payments[] = $productToAdd;
         $this->paymentsQuantity = $this->paymentsQuantity + 1;
         $this->totalAmount = $this->totalAmount + $price;
         $this->total_tax_amount = $this->total_tax_amount + $tax_price;

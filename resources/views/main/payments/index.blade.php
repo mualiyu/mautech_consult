@@ -20,7 +20,7 @@
                         @endif
                         <div class="card mb-4">
                             <div class="card-body">
-                               <div class="row">
+                               {{-- <div class="row">
                                     <div class="col-4"></div>
                                     <div class="col-4"></div>
                                     <div class="col-4">
@@ -33,7 +33,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="table-responsive" style="">
 
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -88,7 +88,7 @@
                                                 <td>{{$payment->description}}</td>
                                                 <td>{{$voucher->pvno}}</td>
                                                 <td>{{$payment->tax_percent ?? '0'}}%</td>
-                                                <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+                                                <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[2].'/'.$date[1].'/'.$date[0]; ?>
                                                 <td>{{$duedate ?? "Null"}}</td>
                                             </tr>
                                             @endforeach
@@ -103,7 +103,7 @@
                                 </div>
                             
                                 <!-- Modal -->
-                                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                {{-- <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
                                       <div class="modal-header">
@@ -120,7 +120,7 @@
                                                 {{-- <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                                                     <i class="fa fa-calendar"></i>&nbsp;
                                                     <input type="text" id="range" name="range" value=""> <i class="fa fa-caret-down"></i>
-                                                </div> --}}
+                                                </div> --{}}}
                                                 <label class="small mb-1" for="range">Date Range:</label><br>
                                                 <input name="daterange" class="form-control" id="range" type="text" placeholder="choose range" />
                                                 <small class=""></small>
@@ -135,7 +135,7 @@
                                       </div>
                                     </div>
                                   </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -180,6 +180,6 @@ $(function() {
     cb(start, end);
 
 });
-</script>>
+</script>
 
 @endsection

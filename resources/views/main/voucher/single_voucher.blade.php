@@ -24,7 +24,7 @@
                                 <div class="table-responsive" style="">
                                     <div class="row">
                                     <div class="col-3">
-                                        <button onclick="window.history.go(-1)" class="btn btn-secondary"><i class="fas fas-goto"></i> Back</button>
+                                        <a href="{{route('vouchers')}}" class="btn btn-secondary"><i class="fas fas-goto"></i> Back</a>
                                         <br><br>
                                     </div>
                                     <div class="col-3"></div>
@@ -79,7 +79,7 @@
                                                 <td>{{$voucher->pvno}}</td>
                                                 <td>{{$payment->tax_percent ?? '0'}}%</td>
                                                 <td>{{$budget->description ?? 'none'}}</td>
-                                                <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+                                                <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[2].'/'.$date[1].'/'.$date[0]; ?>
                                                 <td>{{$duedate}}</td>
                                             </tr>
                                             

@@ -11,6 +11,7 @@ use App\Mandate;
 use Barryvdh\DomPDF\Facade as PDF;
 use NumberToWords\NumberToWords;
 use App\Budget;
+use App\Voucher;
 
 class PdfController extends Controller
 {
@@ -89,7 +90,7 @@ class PdfController extends Controller
 
     public function create_pdf_cashbook_range(Request $request)
     {
-        $daterange = $request->daterange;
+        $daterange = $request->daterange_c;
         $daterange = \explode(' - ', $daterange);
 
         $from = $daterange[0];
@@ -104,10 +105,12 @@ class PdfController extends Controller
 
         $arr = [];
         foreach ($payments as $payment) {
-            $budgets = Budget::find($payment->budget_id);
-            $account = $budgets->account_code;
+            if ($payment->budget_id != 0) {
+                $budgets = Budget::find($payment->budget_id);
+                $account = $budgets->account_code;
 
-            array_push($arr, $account);
+                array_push($arr, $account);
+            }
         }
         $accounts = array_unique($arr);
 
@@ -119,6 +122,41 @@ class PdfController extends Controller
             return $pdf->stream('cashbook.pdf');
         } else {
             return redirect('payments')->with(['errors' => "Date not found!"]);
+        }
+    }
+
+    public function create_pdf_trial_range(Request $request)
+    {
+        $daterangee = $request->daterange_r;
+        $daterange = \explode(' - ', $daterangee);
+
+        $from = $daterange[0];
+        $from = \explode('/', $from);
+        $from = $from[2] . '-' . $from[0] . '-' . $from[1];
+
+        $to = $daterange[1];
+        $to = \explode('/', $to);
+        $to = $to[2] . '-' . $to[0] . '-' . $to[1];
+
+        $vouchers = Voucher::whereBetween('created_at', [$from . " 00:00:00", $to . " 23:59:59"])->get();
+
+        // $arr = [];
+        // foreach ($voucher as $payment) {
+        //     $budgets = Budget::find($payment->budget_id);
+        //     $account = $budgets->account_code;
+
+        //     array_push($arr, $account);
+        // }
+        // $accounts = array_unique($arr);
+
+        $pdf = PDF::loadView('pdf.trial', compact('vouchers'))->setPaper('a4');
+
+        // return view('pdf.trial', compact('vouchers'));
+
+        if ($vouchers->count() > 0) {
+            return $pdf->stream('TrialBalancefor(' . now() . ').pdf');
+        } else {
+            return redirect('reports')->with(['errors' => "No Data for this Date ($daterangee) in vouchers!"]);
         }
     }
 }

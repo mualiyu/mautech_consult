@@ -85,6 +85,7 @@
                                             @csrf
                                             <button type="submit" class="btn btn-primary"> Apply & Create Voucher</button>
                                         </form>
+                                        <a href="{{route('clear_pay')}}" class="btn btn-warning">Clear Cache</a>
                                     </div>
                                     
                                 </div>

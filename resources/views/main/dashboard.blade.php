@@ -28,7 +28,7 @@
  			<?php $beneficiary = Illuminate\Support\Facades\DB::table("beneficiaries")->where('id','=', $mandate->beneficiary_id)->get() ?>
                         <?php $voucher = \App\Voucher::find($mandate->voucher_id) ?>
                         <?php $payment = \App\Payment::find($mandate->payment_id) ?>
- 			<?php $due = explode(' ', $payment->duedate); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+ 			<?php $due = explode(' ', $payment->duedate); $date = explode('-', $due[0]); $duedate = $date[2].'/'.$date[1].'/'.$date[0]; ?>
 
 			<li>{{$duedate}}, {{$mandate->mandateno}}, {{$voucher->pvno}}, NGN{{number_format($voucher->totalamount)}}  </li>
 		@endforeach
@@ -46,7 +46,7 @@
 		@foreach($payments as $payment)
 			<?php $beneficiaries = Illuminate\Support\Facades\DB::table("beneficiaries")->where('id','=', $payment->beneficiary_id)->get() ?>
 			<?php $beneficiary = App\Beneficiary::find($payment->baneficiary_id); ?>
-			<?php $due = explode(' ', $payment->duedate); $date = explode('-', $due[0]); $duedate = $date[0].'/'.$date[1].'/'.$date[2]; ?>
+			<?php $due = explode(' ', $payment->duedate); $date = explode('-', $due[0]); $duedate = $date[2].'/'.$date[1].'/'.$date[0]; ?>
 			<?php $voucher = \App\Voucher::find($payment->voucher_id) ?>
 
 			<li>{{$duedate}}, {{$voucher->pvno}}, 

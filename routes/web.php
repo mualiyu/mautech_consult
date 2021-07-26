@@ -13,6 +13,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\IncomeController;
+use Illuminate\Support\Facades\Cache;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -55,7 +57,10 @@ Route::get('/create_voucher', [VouchersController::class, "show_create_voucher"]
 Route::post('/create_payment', [VouchersController::class, "create_payments"])->name('create_payments');
 Route::post('/{id}/delete_payment_from_local', [VouchersController::class, "delete_payment_from_local"])->name('delete_payment_from_local');
 Route::post('/create_voucher_and_payments', [VouchersController::class, "create_voucher_and_payments"])->name('create_voucher_and_payments');
-
+Route::get('/clear', function () {
+  Cache::forget("payments");
+  return redirect('/create_voucher');
+})->name('clear_pay');
 
 // Payments
 Route::get('/payments', [PaymentsController::class, "index"])->name('payments');
@@ -84,6 +89,7 @@ Route::get('pdf/mandate/{id}', [PdfController::class, "Create_pdf_mandate"])->na
 Route::get('pdf/mandate/', [PdfController::class, "mandate"])->name("mandate");
 Route::get('pdf/cashbook/', [PdfController::class, "create_pdf_cashbook"])->name("create_pdf_cashbook");
 Route::post('pdf/cash_book', [PdfController::class, "create_pdf_cashbook_range"])->name('create_pdf_cashbook_range');
+Route::post('pdf/trial', [PdfController::class, "create_pdf_trial_range"])->name('create_pdf_trial_range');
 
 
 //budgets
