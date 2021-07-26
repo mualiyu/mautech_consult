@@ -51,7 +51,7 @@
                         CashBook Report
                     </div>
                     <div class="card-body">
-                        <form action="{{route('create_pdf_cashbook_range')}}" method="post">
+                        <form action="{{route('create_pdf_cashbook_range')}}" method="post" target="_blank">
                             @csrf
                             <div class="input-group mb-3 col">
                                 {{-- <select name="budget" class="form-control" id="inputGroupSelect01" aria-describedby="button-addon1">
@@ -78,7 +78,7 @@
                         Trial Report
                     </div>
                     <div class="card-body">
-                        <form action="{{route('create_pdf_trial_range')}}" method="post">
+                        <form action="{{route('create_pdf_trial_range')}}" method="post" target="_blank">
                             @csrf
                             <div class="input-group mb-3 col">
                                 {{-- <select name="budget" class="form-control" id="inputGroupSelect01" aria-describedby="button-addon1">
