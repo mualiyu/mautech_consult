@@ -90,6 +90,8 @@ Route::get('pdf/mandate/', [PdfController::class, "mandate"])->name("mandate");
 Route::get('pdf/cashbook/', [PdfController::class, "create_pdf_cashbook"])->name("create_pdf_cashbook");
 Route::post('pdf/cash_book', [PdfController::class, "create_pdf_cashbook_range"])->name('create_pdf_cashbook_range');
 Route::post('pdf/trial', [PdfController::class, "create_pdf_trial_range"])->name('create_pdf_trial_range');
+Route::get('pdf/trial', [PdfController::class, "get_redirect"]);
+Route::get('pdf/cash_book', [PdfController::class, "get_redirect"]);
 
 
 //budgets

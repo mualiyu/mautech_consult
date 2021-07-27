@@ -8,7 +8,7 @@
 </head>
  <body>
      <h2 style="text-align: center; margin:0px auto;">
-        <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}">
+        {{-- <img style="width:70px; height:65px;" src="{{ asset('img/logo-mautech.png') }}"> --}}
     </h2>
 <h2 style="text-align: center; margin:5px;">
 <strong>MAU CONSULTANCY SERVICES</strong></h2>
@@ -82,22 +82,43 @@
 <?php $beneficiary = Illuminate\Support\Facades\DB::table('beneficiaries')->where('id','=', $payment->beneficiary_id)->get(); ?>
 <?php  $duedate = explode(' ', $payment->created_at)  ?>
 <tr style="text-align: left; height: ;">
-<td style="width: 25%; height:;">&nbsp; {{$duedate[0]}}</td>
-<td style="width: 55%%; height: ;">
-<p>&nbsp; {{$beneficiary[0]->name}}: {{$payment->description}}</p>
+    <td style="width: 25%; height:;">&nbsp; {{$duedate[0]}}</td>
+    <td style="width: 55%%; height: ;">
+    <p style="font-size:19px;">&nbsp; {{$beneficiary[0]->name}}: {{$payment->description}} <br>
+    @if ($payment->taxes) 
+    <?php $tax = explode(' ', $payment->taxes)?>
+    @foreach ($tax as $t)
+        <?php $taxx = \App\Tax::find($t); ?>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>{{$taxx->type .' - '. $taxx->percentage}}%</small><br>
+    @endforeach
+    @endif
+</p>
 </td>
 <td style="width: 20%; height: ;">
 <table style="height: ; width: 100%;">
 <tbody>
 <tr style="width:;">
-<td style="width: 65%;  border: 0px solid black;">&nbsp; {{number_format($payment->amount/100, 2)}}</td>
+<td style="width: 65%;  border: 0px solid black;">&nbsp; {{number_format($payment->amount_r/100, 2)}}<br>
+    @if ($payment->amount_r) 
+    <?php $r_amount = $payment->amount_r / 100; ?>
+    @foreach ($tax as $t)
+        <?php 
+            $taxx = \App\Tax::find($t); 
+            $r_a = ($r_amount / 100) * $taxx->percentage;
+            
+            $r_amount = $r_amount - $r_a;
+            $tax_amount = $r_a;
+        ?>
+        &nbsp;&nbsp;&nbsp;&nbsp;<small>{{number_format($tax_amount, 2)}}</small><br>
+    @endforeach
+    @endif
+</td>
 <td style="width: 35%; border: 0px solid black;">&nbsp;</td>
 </tr>
 </tbody>
 </table>
 </td>
 </tr>
-
 @endforeach
 
 <tr style="text-align: left; height: ;">

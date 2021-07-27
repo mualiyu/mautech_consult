@@ -89,17 +89,23 @@ class VouchersController extends Controller
             $amount = $request->amount;
             $tax_amount = 0;
         } else {
+            $amount = $request->amount;
+            $tax_amount = 0;
             foreach ($request->tax as $t) {
                 $tax_db = Tax::find($t);
                 $tax = $tax + $tax_db->percentage;
+                // $a = $request->amount;
+                $a = ($amount / 100) * $tax_db->percentage;
+                $amount = $amount - $a;
+                $tax_amount = $tax_amount + $a;
             }
             // dd($tax);
             // $tax = Tax::find($request->tax);
             // $tax_value = $tax->percentage;
-            $a = $request->amount;
-            $a = ($a / 100) * $tax;
-            $amount = $request->amount - $a;
-            $tax_amount = $a;
+            // $a = $request->amount;
+            // $a = ($a / 100) * $tax;
+            // $amount = $request->amount - $a;
+            // $tax_amount = $a;
         }
         // dd($tax_amount);
 
@@ -205,19 +211,19 @@ class VouchersController extends Controller
                     'totalamount' => $payments->totalAmount * 100,
                 ]);
 
-                if ($payments->total_tax_amount != 0) {
-                    # code...
-                    $tax_totalamount = $payments->total_tax_amount;
+                // if ($payments->total_tax_amount != 0) {
+                //     # code...
+                //     $tax_totalamount = $payments->total_tax_amount;
 
-                    $tax_ex = $ex + 1;
-                    $tax_split = str_split($tax_ex, 4);
-                    $tax_pvno = $tax_split[0] . '/' . $tax_split[1];
+                //     $tax_ex = $ex + 1;
+                //     $tax_split = str_split($tax_ex, 4);
+                //     $tax_pvno = $tax_split[0] . '/' . $tax_split[1];
 
-                    $new_tax_voucher = Voucher::create([
-                        'pvno' => $tax_pvno,
-                        'totalamount' => $tax_totalamount * 100,
-                    ]);
-                }
+                //     $new_tax_voucher = Voucher::create([
+                //         'pvno' => $tax_pvno,
+                //         'totalamount' => $tax_totalamount * 100,
+                //     ]);
+                // }
             } else {
                 $year = 20. . date('y');
                 $no = '/0001';
@@ -228,26 +234,34 @@ class VouchersController extends Controller
                     'totalamount' => $payments->totalAmount * 100,
                 ]);
 
-                if ($payments->total_tax_amount != 0) {
-                    # code...
-                    $tax_totalamount = $payments->total_tax_amount;
+                // if ($payments->total_tax_amount != 0) {
+                //     # code...
+                //     $tax_totalamount = $payments->total_tax_amount;
 
-                    // dd()
-                    $tax_ex = (int) str_replace('/', '', $pvno) + 1;
-                    $tax_split = str_split($tax_ex, 4);
-                    $tax_pvno = $tax_split[0] . '/' . $tax_split[1];
+                //     // dd()
+                //     $tax_ex = (int) str_replace('/', '', $pvno) + 1;
+                //     $tax_split = str_split($tax_ex, 4);
+                //     $tax_pvno = $tax_split[0] . '/' . $tax_split[1];
 
-                    $new_tax_voucher = Voucher::create([
-                        'pvno' => $tax_pvno,
-                        'totalamount' => $tax_totalamount * 100,
-                    ]);
-                }
+                //     $new_tax_voucher = Voucher::create([
+                //         'pvno' => $tax_pvno,
+                //         'totalamount' => $tax_totalamount * 100,
+                //     ]);
+                // }
             }
 
             foreach ($payments->payments as $payment) {
                 $tax_percent = $payment['data']['tax_p'];
                 $beneficiary_id = (int)$payment['data']['beneficiary'];
                 $budget_id = (int)$payment['data']['budget'];
+
+                // $taxes_pay = $payment['data']['tax'];
+                $tax_array = [];
+                $tax_amount_array = [];
+
+                // for ($i = 0; $i < count($taxes_pay); $i++) {
+                //     array_push($tax_array, $taxes_pay[$i]);
+                // }
 
                 $paymentArrayy = [
                     'amount' => $payment['data']['amount'] * 100,
@@ -258,31 +272,59 @@ class VouchersController extends Controller
                     'budget_id' => $budget_id,
                     'tax_percent' => $tax_percent,
                     'approve' => 0,
+                    'amount_r' => $payment['data']['r_amount'] * 100,
                 ];
                 //dd($paymentArray);
 
                 $newPayment = Payment::create($paymentArrayy);
 
-                DB::table('payments')->where('id', '=', $newPayment->id)->update(['budget_id' => $budget_id, 'approve' => 0, 'tax_percent' => $tax_percent,]);
+                DB::table('payments')->where('id', '=', $newPayment->id)->update([
+                    'budget_id' => $budget_id,
+                    'approve' => 0,
+                    'tax_percent' => $tax_percent,
+                    'amount_r' => $payment['data']['r_amount'] * 100,
+                ]);
 
 
                 if (is_array($payment['data']['tax']) > 0) {
-                    # code...
+
                     $taxes = $payment['data']['tax'];
 
+                    $r_amount = $payment['data']['r_amount'];
+
                     foreach ($taxes as $tax) {
+
+                        $lastTVoucher = DB::table('vouchers')->orderBy('id', 'DESC')->first();
+
+                        //get tax from table
                         $tax_db_b = Tax::find((int)$tax);
                         $ben_t = Beneficiary::find((int)$payment['data']['ben_tax'][(int)$tax]);
 
-                        $r_a = $payment['data']['r_amount'];
-                        $r_a = ($r_a / 100) * $tax_db_b->percentage;
+                        $r_a = ($r_amount / 100) * $tax_db_b->percentage;
+                        $r_amount = $r_amount - $r_a;
 
                         $tax_amount = $r_a * 100;
+
+                        array_push($tax_array, $tax);
+                        // array_push($tax_amount_array, $tax_amount);
+
+
+                        //new voucher for tax ben
+                        $ex = (int) str_replace('/', '', $lastTVoucher->pvno) + 1;
+                        $split = str_split($ex, 4);
+                        $pvno = $split[0] . '/' . $split[1];
+
+                        $newTVoucher = Voucher::create([
+                            'pvno' => $pvno,
+                            'totalamount' => $tax_amount,
+                        ]);
+
+                        //get beneficiary of tax 
                         $ben_id = (int)$payment['data']['ben_tax'][(int)$tax];
                         $taxPaymentArray = [
                             'amount' => $tax_amount,
                             'description' => 'Tax',
-                            'voucher_id' => $new_tax_voucher->id,
+                            'voucher_id' => $newTVoucher->id,
                             'beneficiary_id' => $ben_id,
                             'duedate' => date('d/m/y'),
                             'budget_id' => 0,
@@ -298,8 +340,15 @@ class VouchersController extends Controller
                                 'budget_id' => 0,
                                 'approve' => 0,
                                 'tax_percent' => 0,
+                                'amount_r' => $tax_amount,
                             ]);
                     }
+
+                    $tax_r = implode(' ', $tax_array);
+
+                    DB::table('payments')->where('id', '=', $newPayment->id)->update([
+                        'taxes' => $tax_r,
+                    ]);
                 }
             }
 

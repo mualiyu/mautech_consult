@@ -77,7 +77,20 @@
                                                 <td>NGN <span id="amount[<?= $i; ?>]">{{number_format($payment->amount/100, 2)}}</span></td>
                                                 <td>{{$payment->description}}</td>
                                                 <td>{{$voucher->pvno}}</td>
-                                                <td>{{$payment->tax_percent ?? '0'}}%</td>
+                                                {{-- <td>{{$payment->taxes ?? '0'}}%</td> --}}
+                                                <td>
+                                                    @if ($payment->taxes)  
+                                                    <?php $tax = explode(' ', $payment->taxes)?>
+                                                    @foreach ($tax as $t)
+                                                        <?php $taxx = \App\Tax::find($t); ?>
+                                                        <small>
+                                                            {{$taxx->percentage}}% ,   
+                                                        </small>
+                                                    @endforeach
+                                                    @else
+                                                     None
+                                                    @endif
+                                                </td>
                                                 <td>{{$budget->description ?? 'none'}}</td>
                                                 <?php $due = explode(' ', $payment->created_at); $date = explode('-', $due[0]); $duedate = $date[2].'/'.$date[1].'/'.$date[0]; ?>
                                                 <td>{{$duedate}}</td>

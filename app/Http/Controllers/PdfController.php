@@ -138,25 +138,21 @@ class PdfController extends Controller
         $to = \explode('/', $to);
         $to = $to[2] . '-' . $to[0] . '-' . $to[1];
 
-        $vouchers = Voucher::whereBetween('created_at', [$from . " 00:00:00", $to . " 23:59:59"])->get();
+        $payments = Payment::whereBetween('created_at', [$from . " 00:00:00", $to . " 23:59:59"])->get();
 
-        // $arr = [];
-        // foreach ($voucher as $payment) {
-        //     $budgets = Budget::find($payment->budget_id);
-        //     $account = $budgets->account_code;
+        $pdf = PDF::loadView('pdf.trial', compact('payments', 'daterange'))->setPaper('a4');
 
-        //     array_push($arr, $account);
-        // }
-        // $accounts = array_unique($arr);
+        // return view('pdf.trial', compact('payments', 'daterange'));
 
-        $pdf = PDF::loadView('pdf.trial', compact('vouchers'))->setPaper('a4');
-
-        // return view('pdf.trial', compact('vouchers'));
-
-        if ($vouchers->count() > 0) {
+        if ($payments->count() > 0) {
             return $pdf->stream('TrialBalancefor(' . now() . ').pdf');
         } else {
             return redirect('reports')->with(['errors' => "No Data for this Date ($daterangee) in vouchers!"]);
         }
+    }
+
+    public function get_redirect()
+    {
+        return redirect()->route('reports');
     }
 }
